@@ -27,7 +27,7 @@ public:
         }
         if (head and head->val == key) head = head->next;
 
-        //if ( temp and temp->val == key) temp =NULL ;
+       
 
         return head;
 
