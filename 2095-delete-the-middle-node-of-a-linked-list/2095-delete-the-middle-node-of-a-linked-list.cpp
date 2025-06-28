@@ -11,27 +11,32 @@
 class Solution {
 public:
     ListNode* deleteMiddle(ListNode* head) {
+
+        if (head == NULL) return NULL;
         
-        ListNode* prev ;
-        ListNode* slow= head;
-        ListNode* fast= head;
+        ListNode* dummy = new ListNode(-1);
+
+        ListNode* slow = dummy;
+        ListNode* fast = dummy;
 
 
-        while(fast and fast->next){
+        dummy->next = head;
 
-            prev = slow;
+        while (fast->next and fast->next->next){
             slow = slow->next;
             fast = fast->next->next;
-
         }
 
-        if ( slow and slow->next){
-            slow->val = slow->next->val;
-            prev->next = slow->next;}
+        cout<<slow->val;
 
-        else prev->next = NULL;
+        slow->next = slow->next->next;
 
-            return head;
+        return dummy->next;
+
+
+
+        
+
 
         
 
