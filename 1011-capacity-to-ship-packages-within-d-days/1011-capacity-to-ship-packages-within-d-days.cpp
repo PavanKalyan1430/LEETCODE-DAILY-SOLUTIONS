@@ -1,54 +1,57 @@
-int can_store(vector<int> weights, int min_weight){
+int can_ship(vector<int >weights, int w){
     int capacity = 0;
-    int no_of_days= 0;
+    int days=0;
 
     for (int i : weights){
-        if ( (capacity + i ) > min_weight){
-            no_of_days +=1;
+        if ( (capacity + i) > w  ){
             capacity = i;
+            days +=1;
         }
-        else capacity+=i;
+        else capacity +=i;
+
     }
 
-    if (capacity > 0) no_of_days +=1;
+    if (capacity > 0)  days+=1;
 
-    return no_of_days;
+    return days;
 }
 
 class Solution {
 public:
     int shipWithinDays(vector<int>& weights, int days) {
         
-        int sumy = 0;
         int maxi = 0;
+        int result = INT_MAX;
+        int sumy = 0;
 
-        for (int i: weights){
-            sumy+= i;
-            maxi = max(maxi, i);}
+        for (int i : weights){
+            maxi = max(maxi, i);
+            sumy += i;
+        }
 
         int left = maxi;
         int right = sumy;
-        int no_of_days;
-        int result = INT_MAX;
+        int days_req ;
         int mid;
 
-        while (left <= right){
-            mid = (left + right ) / 2;
-            no_of_days = can_store(weights, mid);
+        while(left <= right){
 
-            if (no_of_days <= days){
+            mid = (left + right) / 2;
+
+            days_req = can_ship(weights,mid);
+
+            cout<<days_req<<" ";
+
+            if (days_req <= days){
+                cout<<days_req<<" ";
                 result = min(result, mid);
                 right = mid-1;
             }
             else left = mid+1;
 
-            
         }
 
         return result;
-
-
-
 
     }
 };
