@@ -1,48 +1,49 @@
-long long can_eat(vector<int>& nums,  int ban_per_hour){
+long long can_store(int bananas_per_hour, vector<int> piles) {
 
-    long long time = 0;
+    long long hours = 0;;
 
-    for (int i=0; i<nums.size(); i++){
-        time += (nums[i] + ban_per_hour-1) / ban_per_hour;
+    for (int i : piles){
+        hours +=  ( ((i + bananas_per_hour)- 1) / bananas_per_hour);
     }
 
-    return time;
+    return hours;
+
 
 }
 
+
 class Solution {
 public:
-    int minEatingSpeed(vector<int>& nums, int h) {
-        
-        
-        int maxi = INT_MIN;
+    int minEatingSpeed(vector<int>& piles, int h) {
+        int maxi = 0;
 
-        for (int i : nums) {
-            maxi = max(maxi,i);
-        }
+        for (int i: piles) maxi = max(maxi, i);
 
         int left = 1;
         int right = maxi;
-        int mid ;
+        int mid;
+        int   hours;
         int result = INT_MAX;
-        long long hour_time;
 
-        while (left <= right){
-            
-            mid = (left + right ) / 2;
+        while(left <= right) {
 
-            hour_time = can_eat( nums,mid);
 
-            if (hour_time <= h) {
-                result = min(result, mid);
+            mid = ( left + right ) / 2;
+
+
+            hours = can_store(mid,piles);
+
+            cout<<mid<<"   " << "hours :  "<< hours<<endl;
+
+            if (hours <= h){
+                
+                result = min(result , mid);
                 right = mid-1;
-            }
 
+            }
+            
             else left = mid+1;
 
-
-
-            
 
         }
 
