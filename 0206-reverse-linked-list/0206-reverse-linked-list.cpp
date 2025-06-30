@@ -11,35 +11,20 @@
 class Solution {
 public:
     ListNode* reverseList(ListNode* head) {
-        ListNode* temp = head;
-        int index =0,count=0;
 
-        vector <int> v;
+        if (!head or !head->next) return head;
 
-        while(temp!=NULL){
-            v.push_back(temp->val);
-            temp = temp->next;
+        ListNode* curr = head;
+        ListNode* prev = NULL;
+        ListNode* front;
+
+        while(curr){
+            front = curr->next;
+            curr->next = prev;
+            prev = curr;
+            curr = front;
+            
         }
-        reverse(v.begin(), v.end());
-
-        for (int i : v){
-            cout<<i<<" ";
-            count+=1;
-        }
-
-        temp = head;
-      
-      while(temp){
-        temp->val = v[index];
-        index++;
-        temp = temp->next;
-      }
-        
-
-
-        
-
-        return head;
-
+        return prev;
     }
 };
