@@ -14,37 +14,44 @@ public:
         
         ListNode* temp = head;
         ListNode* curr = head;
+        int count = 1;
 
         if (!head or !head->next or k==0 ) return head;
 
 
-        int count = 0;
 
-        while(temp){
+        while(temp->next){
             count+=1;
             temp= temp->next;
         }
 
+        
         k = k % count;
+        
 
         for (int i=1; i<count-k ; i++){
             curr = curr->next;
         }
-        cout<<curr->val;
+        
+        temp->next = head;
 
         ListNode* curr_2 = curr->next;
         curr->next = NULL;
 
-        ListNode* start = curr_2;
+        return curr_2;
+
+        // ListNode* start = curr_2;
 
 
-        while(curr_2 and curr_2->next){
-            curr_2 = curr_2->next;
-        }
+        // while(curr_2 and curr_2->next){
+        //     curr_2 = curr_2->next;
+        // }
 
-        if (curr_2) curr_2->next = head;
-        else return head;
-        return start;
+        // if (curr_2) curr_2->next = head;
+        // else return head;
+        // return start;
+
+
 
     }
 };
