@@ -11,15 +11,15 @@ public:
 
              str += s[i];
 
-            if (m.count(str) >= 1){
-                //str+=s[i];
-                continue;
-            }
-
-            else {
+            if (m.count(str) == 0){
                 m[str]++;
                 result.push_back(str);
-                str = "";}
+                str = "";
+                }
+                
+            
+
+            
 
         }
 
