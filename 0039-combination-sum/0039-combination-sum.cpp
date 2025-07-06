@@ -1,6 +1,6 @@
-void fun (vector<vector<int>> &result , vector<int> &temp, vector<int> nums, int target, int i){
+void fun (vector<vector<int>> &result , vector<int> &temp, vector<int> &nums, int target, int start){
 
-    if ( i >=nums.size() or target <= 0) {
+    if (target <= 0) {
         
         if ( target == 0){
             result.push_back(temp);
@@ -8,12 +8,25 @@ void fun (vector<vector<int>> &result , vector<int> &temp, vector<int> nums, int
         return ;
     }
 
-    temp.push_back(nums[i]);
 
-    fun (result, temp, nums, target-nums[i], i);
+    for (int i= start ; i<nums.size(); i++){
 
-    temp.pop_back();
-    fun(result, temp, nums, target, i+1);
+        if (nums[i] > target) continue;
+         temp.push_back(nums[i]);
+
+         fun (result, temp, nums, target-nums[i], i);
+
+          temp.pop_back();
+          //fun(result, temp, nums, target, start+1);
+
+    }
+
+   
+
+    
+
+   
+    
 
 
 }
