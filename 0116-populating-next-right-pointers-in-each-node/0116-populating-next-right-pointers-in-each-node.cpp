@@ -16,20 +16,43 @@ public:
 };
 */
 
+void HelperFunction(Node*&root, queue<Node*> q){
+    
+    q.push(root);
+    
+    while(!q.empty()){
+        int size = q.size();
+       
+        
+        for (int i=0; i<size; i++){
+            Node* curr = q.front();
+            q.pop();
+            
+            if (i < size - 1) {
+                    curr->next = q.front();
+                }
+                
+            if (curr->left) q.push(curr->left);
+            
+            if (curr->right) q.push(curr->right);
+            
+            
+            
+        }
+    }
+    
+}
+
 class Solution {
 public:
     Node* connect(Node* root) {
+       
+        queue<Node* > q;
+        
+        if (!root) return NULL;
         
         
-        if (!root or !root->left or !root->right) return root;
-        
-        if (root->left) root->left->next = root->right;
-        
-        if (root->next) root->right->next = root->next->left;
-        
-        connect(root->left);
-        connect(root->right);
-
+        HelperFunction(root, q);
         
         return root;
     }
