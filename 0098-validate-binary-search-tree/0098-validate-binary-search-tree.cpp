@@ -1,22 +1,31 @@
-bool HelperFunction(TreeNode* root, long mini, long maxi){
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
 
-    if (!root ) return true;
+bool HelperFunction(TreeNode* root, long min_val, long max_val){
 
-    if(root->val <=  mini or root->val >= maxi) return false;
+    if (root == NULL) return true;
 
-     return HelperFunction(root->left, mini, root->val) && HelperFunction(root->right, root->val, maxi);
+    if (root->val >= max_val || root->val <= min_val) return false;
 
+    return HelperFunction(root->left, min_val, root->val) &&   HelperFunction(root->right, root->val, max_val);
 
 }
-
 
 class Solution {
 public:
     bool isValidBST(TreeNode* root) {
-        long mini = LONG_MIN;
-        long maxi = LONG_MAX;
 
-        return HelperFunction(root, mini, maxi);
-
+        long min_val = LONG_MIN;
+        long max_val = LONG_MAX;
+        return HelperFunction(root, min_val, max_val);
     }
 };
