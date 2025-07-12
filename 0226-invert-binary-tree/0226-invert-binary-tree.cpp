@@ -9,27 +9,19 @@
  *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
  * };
  */
-void HelperFunction(TreeNode* root){
-
-    if (!root) return;
-
-    TreeNode *curr = root->left;
-    root->left = root->right;
-    root->right = curr;
-
-     HelperFunction( root->left);
-     HelperFunction( root->right);
-
-
-
-}
-
 class Solution {
 public:
     TreeNode* invertTree(TreeNode* root) {
-
+        
         if (!root) return NULL;
-        HelperFunction(root);
+
+        TreeNode *curr = root->left;
+        root->left = root->right;
+        root->right = curr;
+
+        invertTree( root->left);
+        invertTree( root->right);
+
         return root;
     }
 };
