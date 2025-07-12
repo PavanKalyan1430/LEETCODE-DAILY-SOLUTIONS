@@ -2,10 +2,10 @@ void HelperFunction(TreeNode* root, string &result , string temp){
 
     if (!root) return;
 
-    temp += ('a' + root->val);
+    temp = char('a' + root->val) + temp ;
 
     if (!root->left and !root->right){
-        reverse(temp.begin(), temp.end());
+       // reverse(temp.begin(), temp.end());
 
         if (result == ""){
             result = temp;
@@ -29,11 +29,9 @@ public:
     string smallestFromLeaf(TreeNode* root) {
 
         if (!root) return "";
-        //int res = 0;
         string result = "";
         string temp = "";
-        //string Tresult;
-
+        
         HelperFunction(root, result, temp);
 
         return result;
