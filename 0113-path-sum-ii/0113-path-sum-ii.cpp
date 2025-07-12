@@ -1,33 +1,35 @@
-void HelperFunction(TreeNode* root, int &target, int currSum, vector<vector<int>>&result, vector<int> temp){
-
-    if (!root) return ;
+void HelperFunction(TreeNode* root, int &targetSum, int currSum, vector<int>&temp ,vector<vector<int>>& result){
+    
+    if (root == NULL ) return ;
 
     currSum += root->val;
     temp.push_back(root->val);
 
-    if (!root->left and !root->right){
-        if (target == currSum){
-            result.push_back(temp);
+    if (root->left == NULL and root->right == NULL and currSum == targetSum){
+        result.push_back(temp);
         }
-    }
 
-    HelperFunction(root->left, target, currSum, result, temp);
+     HelperFunction(root->left, targetSum, currSum,temp, result);
 
-    HelperFunction(root->right, target, currSum, result, temp);
+     for (int i : temp) cout<<i<<" ";
+     cout<<endl;
+
+     HelperFunction(root->right, targetSum, currSum, temp, result);
+     temp.pop_back();
+
 
     
-
 
 }
 class Solution {
 public:
-    vector<vector<int>> pathSum(TreeNode* root, int target) {
-
-        vector<vector<int>> result;
+    vector<vector<int>> pathSum(TreeNode* root, int targetSum) {
+        
+        vector<vector<int>> result; 
         vector<int> temp;
         int currSum = 0;
 
-        HelperFunction(root, target, currSum, result, temp);
+        HelperFunction(root, targetSum, currSum,temp, result);
 
         return result;
 
