@@ -10,27 +10,25 @@
  * };
  */
 
-void HelperFunction(TreeNode* root , int &sum){
+void HelperFunction(TreeNode* root, int& sum){
 
-    if (!root) return ;
+    if (!root)  return;
 
-    if (root->left and root->left->left == NULL and root->left->right == NULL){;
+    if (root->left and !root->left->left and !root->left->right){
         sum += root->left->val;
     }
 
-    HelperFunction(root->left , sum);
+    HelperFunction(root->left, sum);
 
     HelperFunction(root->right, sum);
 
+
+
 }
-
-
 class Solution {
 public:
     int sumOfLeftLeaves(TreeNode* root) {
-        
-        int sum = 0;
-
+        int sum =0;
         HelperFunction(root, sum);
 
         return sum;
