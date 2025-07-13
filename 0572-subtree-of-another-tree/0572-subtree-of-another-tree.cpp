@@ -16,11 +16,13 @@ public:
     bool isSubtree(TreeNode* root, TreeNode* subRoot) {
         
         if (!root) return false;
-        
-        return dfs(root->left, subRoot) || dfs(root->right, subRoot);
 
-        isSubtree(root->left, subRoot);
-        isSubtree(root->right, subRoot);
+         if (dfs(root, subRoot)) return true;
+        
+        return isSubtree(root->left, subRoot) || isSubtree(root->right, subRoot);
+        
+
+
 
 
 
