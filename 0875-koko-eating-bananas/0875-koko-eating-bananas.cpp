@@ -3,7 +3,7 @@ long long can_store(int bananas_per_hour, vector<int> piles) {
     long long hours = 0;;
 
     for (int i : piles){
-        hours +=  ( ((i + bananas_per_hour)- 1) / bananas_per_hour);
+        hours +=  ( (i + bananas_per_hour)- 1) / bananas_per_hour;
     }
 
     return hours;
@@ -22,7 +22,7 @@ public:
         int left = 1;
         int right = maxi;
         int mid;
-        int   hours;
+        long long    hours;
         int result = INT_MAX;
 
         while(left <= right) {
@@ -41,7 +41,7 @@ public:
                 right = mid-1;
 
             }
-            
+
             else left = mid+1;
 
 
