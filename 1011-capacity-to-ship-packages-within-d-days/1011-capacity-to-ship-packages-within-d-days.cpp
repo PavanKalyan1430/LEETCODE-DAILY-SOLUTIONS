@@ -5,12 +5,21 @@ int can_ship(vector<int> &weights, int max_capacity_per_day){
 
     for (int i : weights){
 
-        if (capacity + i > max_capacity_per_day){
-            total_days_req += 1;
-            capacity = i;
-        }
+        capacity += i;
 
-        else capacity += i;
+        if (capacity >= max_capacity_per_day){
+
+            if (capacity  > max_capacity_per_day){
+                capacity = i;
+            }
+
+            else capacity = 0;
+
+            if (capacity == max_capacity_per_day) total_days_req +=1;
+
+
+            total_days_req += 1;
+        }
 
     }
 
