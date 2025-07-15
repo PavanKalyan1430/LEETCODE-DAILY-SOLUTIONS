@@ -1,53 +1,53 @@
-int can_ship(vector<int >weights, int w){
+int can_ship(vector<int> &weights, int max_capacity_per_day){
+
+    int total_days_req = 0;
     int capacity = 0;
-    int days=0;
 
     for (int i : weights){
-        if ( (capacity + i) > w  ){
+
+        if (capacity + i > max_capacity_per_day){
+            total_days_req += 1;
             capacity = i;
-            days +=1;
         }
-        else capacity +=i;
+
+        else capacity += i;
 
     }
 
-    if (capacity > 0)  days+=1;
+    if (capacity > 0) total_days_req +=1;
 
-    return days;
+    return total_days_req;
+
 }
+
+
 
 class Solution {
 public:
     int shipWithinDays(vector<int>& weights, int days) {
         
-        int maxi = 0;
-        int result = INT_MAX;
-        int sumy = 0;
+        int left = *max_element(weights.begin(), weights.end());
+        int sum = 0;
+        int right = accumulate(weights.begin(), weights.end(), sum);
 
-        for (int i : weights){
-            maxi = max(maxi, i);
-            sumy += i;
-        }
-
-        int left = maxi;
-        int right = sumy;
-        int days_req ;
         int mid;
+        int total_days_req;
+        int result = INT_MAX;
 
-        while(left <= right){
 
-            mid = (left + right) / 2;
+        while (left <= right){
 
-            days_req = can_ship(weights,mid);
+            int mid = left + (right - left) / 2;
 
-            cout<<days_req<<" ";
+            total_days_req = can_ship(weights, mid);
 
-            if (days_req <= days){
-                cout<<days_req<<" ";
-                result = min(result, mid);
+            if (total_days_req <= days){
+                result =   min(result, mid);
                 right = mid-1;
             }
+
             else left = mid+1;
+
 
         }
 
