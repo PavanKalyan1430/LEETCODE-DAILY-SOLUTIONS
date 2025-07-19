@@ -1,44 +1,62 @@
 class Solution {
 public:
-    vector<vector<int>> updateMatrix(vector<vector<int>>& mat) {
-        int rows = mat.size();
-        int cols = mat[0].size();
+    vector<vector<int>> updateMatrix(vector<vector<int>>& grid) {
+        
 
-        vector<vector<int>> dist(rows, vector<int>(cols, INT_MAX));
-        queue<pair<int, int>> q;
 
-        // Step 1: Push all 0s into the queue, set distance of 0s as 0
-        for (int i = 0; i < rows; ++i) {
-            for (int j = 0; j < cols; ++j) {
-                if (mat[i][j] == 0) {
-                    dist[i][j] = 0;
-                    q.push({i, j});
+
+        int ones = 1;
+        int zeroes = 0;
+        int minutes = 0;
+
+        int rows = grid.size();
+        int columns = grid[0].size();
+
+        queue<pair<int,int>> q; 
+
+        for (int i=0; i<rows ; i++){
+            for (int j= 0 ; j<columns ; j++){
+
+                if (grid[i][j] == 1){
+                    ones+=1;
+                    grid[i][j] = -1;}
+
+                else if (grid[i][j] == 0){
+                    zeroes+=1;
+                    q.push({i,j});
                 }
             }
         }
 
-        // Step 2: Perform BFS from all 0s
-        vector<int> dx = {0, -1, 0, 1};
-        vector<int> dy = {1, 0, -1, 0};
+        if (ones == 0) return grid;
 
-        while (!q.empty()) {
-            auto [x, y] = q.front();
-            q.pop();
+        vector<int> dx = {0,-1,0,1};
+        vector<int> dy = {1,0,-1,0};
 
-            for (int k = 0; k < 4; ++k) {
-                int newX = x + dx[k];
-                int newY = y + dy[k];
+        while (q.size() > 0){
+            minutes +=1;
 
-                // Valid cell and shorter path found
-                if (newX >= 0 && newY >= 0 && newX < rows && newY < cols) {
-                    if (dist[newX][newY] > dist[x][y] + 1) {
-                        dist[newX][newY] = dist[x][y] + 1;
-                        q.push({newX, newY});
+            int size = q.size();
+
+            for (int i=0; i<size; i++){
+                pair <int,int> point = q.front();
+                q.pop();
+
+                for (int j=0; j<4; j++){
+                    int x = point.first + dx[j];
+                    int y = point.second + dy[j];
+
+                    if ( x >=0 and y>=0 and x<rows and y<columns and grid[x][y] == -1 ){
+                        q.push({x,y});
+                        grid[x][y] = minutes;
+                        ones -=1 ;
                     }
                 }
+
+                if (ones == 0) return grid;
             }
         }
 
-        return dist;
+        return grid;
     }
 };
