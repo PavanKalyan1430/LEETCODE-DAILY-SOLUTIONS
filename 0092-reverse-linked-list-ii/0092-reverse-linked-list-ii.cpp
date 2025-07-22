@@ -1,48 +1,62 @@
-
-
-ListNode* reverse(ListNode* head, int count) {
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+ListNode* reverse( ListNode* head, int count){
     ListNode* curr = head;
     ListNode* prev = NULL;
-    ListNode* front = NULL;
+    ListNode* front ;
 
-    while (count--) {
+    while( count-- ){
         front = curr->next;
         curr->next = prev;
         prev = curr;
         curr = front;
+
     }
 
-    // head is now the tail of reversed part
     head->next = curr;
+    return prev;
 
-    return prev;  // New head of reversed sublist
+
+    
 }
 
 class Solution {
 public:
     ListNode* reverseBetween(ListNode* head, int left, int right) {
         
-        if (!head || left == right) return head;
+        ListNode* start;
+        ListNode* start_left;
+        ListNode* rev;
+
 
         ListNode* dummy = new ListNode(-1);
+        ListNode* curr = dummy;
         dummy->next = head;
 
-        ListNode* temp = dummy;
-        int count = 1;
-
-        // Move to node just before the `left`th node
-        while (count < left) {
-            temp = temp->next;
-            count++;
+        for (int i=1; i<left; i++){
+            curr = curr->next;
         }
 
-        ListNode* start = temp;         // Node before reversal
-        ListNode* reverseStart = temp->next; // Node at position `left`
+        start = curr;           //left before node
+        start_left = curr->next; // left node (start of reverse)
 
-        ListNode* newHead = reverse(reverseStart, right - left + 1);
+        rev = reverse(start_left, (right-left) + 1);
 
-        start->next = newHead;
+        start->next = rev;
 
         return dummy->next;
+
+
+
+
+
     }
 };
