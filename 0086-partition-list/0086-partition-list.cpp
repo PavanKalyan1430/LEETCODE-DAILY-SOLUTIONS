@@ -11,37 +11,30 @@
 class Solution {
 public:
     ListNode* partition(ListNode* head, int x) {
-
-
-        if (!head or !head->next) return head;
         
-        ListNode* small= new ListNode(-1); 
-        ListNode* great = new ListNode(-1);
-        ListNode* smallhead = small;
-        ListNode* greathead = great;
+        ListNode* smallhead = new ListNode(-1);
+        ListNode* bighead = new ListNode(-1);
+        ListNode* small = smallhead;
+        ListNode* big = bighead;
+        ListNode* curr = head;
 
-    
-
-
-        ListNode* temp = head;
-
-        while(temp){
-            if (temp->val < x){
-                small->next = temp;
+        while(curr != NULL){
+            if (curr->val < x){
+                small->next = curr;
                 small = small->next;
             }
+
             else {
-                great->next = temp;
-                great = great->next;
+                big->next = curr;
+                big = big->next;
             }
 
-            temp = temp->next;
+            curr = curr->next;
         }
 
-        small->next = greathead->next;
-        great->next = NULL;
+        small->next = bighead->next;
+        big->next = NULL;
 
         return smallhead->next;
-
     }
 };
