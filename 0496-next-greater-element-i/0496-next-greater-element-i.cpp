@@ -19,12 +19,7 @@ public:
             s.push(nums[i]);
         }
 
-        for (auto i : m){
-            cout<< i.first <<" " << i.second<<endl; 
-        }
-
         for (int i : nums1){
-
             if ( m.count(i) ) res.push_back(m[i]);
         }
         return res;
