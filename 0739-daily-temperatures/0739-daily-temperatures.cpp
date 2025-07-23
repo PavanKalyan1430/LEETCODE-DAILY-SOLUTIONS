@@ -1,20 +1,25 @@
 class Solution {
 public:
-    vector<int> dailyTemperatures(vector<int>& nums) {
+    vector<int> dailyTemperatures(vector<int>&  nums) {
         
-        vector<int> res;
-        
-        for (int i=0; i<nums.size(); i++){
-            int element = nums[i];
-            int  j =i+1;
-            
-            while( j < nums.size() and nums[j]<= element ) j++;
+        stack <int> s;
+        vector <int> result(nums.size());
 
-            if ( j >= nums.size()) res.push_back(0); 
-            else res.push_back( j-i );
+        for (int i=0; i<nums.size(); i++){
+
+            while (s.size() > 0 and nums[s.top()]  < nums[i]){
+
+                    result[s.top()] =  i- s.top() ;
+                    s.pop();
+
+            }
+            s.push(i);
+
         }
 
-        return res;
+        for (int i: result) cout<<i<<" ";
+        return result;
+
 
     }
 };
