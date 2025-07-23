@@ -1,41 +1,33 @@
 class Solution {
 public:
-    vector<int> nextGreaterElement(vector<int>& nums1, vector<int>& nums2) {
+    vector<int> nextGreaterElement(vector<int>& nums1, vector<int>& nums) {
         
-        //unordered_map (int , int) m;
+        unordered_map <int, int> m;
+        stack <int> s;
+        vector <int> res;
 
-        vector<int> result;
+        s.push(nums.back());
+        m[nums.back()] = -1;
 
-        // for (int i=0; i<nums1.size(); i++){
-        //     m[nums[i]]+=1;
-        // }
-        int k;
+        for (int i=nums.size()-2; i>=0; i--){
 
-        for (int i=0; i<nums1.size(); i++){
+            while ( !s.empty() and s.top() < nums[i]) s.pop();
 
-            for (int j =0; j<nums2.size(); j++){
+            if (s.size() == 0) m[nums[i]] = -1;
+            else m[nums[i]] = s.top();
 
-                if (nums1[i] == nums2[j]){
-
-                    int ele = nums2[j];
-
-                    for ( k =j+1; k<nums2.size(); k++){
-                        if ( nums2[k] > ele){
-                            result.push_back(nums2[k]);
-                            break;
-                        }
-                    }
-
-                    if ( k == nums2.size()) result.push_back(-1);
-
-                }
-                
-
-                
-            }
+            s.push(nums[i]);
         }
 
-        return result;
+        for (auto i : m){
+            cout<< i.first <<" " << i.second<<endl; 
+        }
+
+        for (int i : nums1){
+
+            if ( m.count(i) ) res.push_back(m[i]);
+        }
+        return res;
 
     }
 };
