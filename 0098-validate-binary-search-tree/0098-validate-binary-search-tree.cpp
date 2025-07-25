@@ -16,7 +16,12 @@ bool HelperFunction(TreeNode* root, long min_val, long max_val){
 
     if (root->val >= max_val || root->val <= min_val) return false;
 
-    return HelperFunction(root->left, min_val, root->val) &&   HelperFunction(root->right, root->val, max_val);
+    int left = HelperFunction(root->left, min_val, root->val);
+    int right = HelperFunction(root->right, root->val, max_val);
+
+    return left && right;
+
+    //return HelperFunction(root->left, min_val, root->val) &&   HelperFunction(root->right, root->val, max_val);
 
 }
 
