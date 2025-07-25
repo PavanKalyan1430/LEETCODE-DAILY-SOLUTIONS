@@ -1,31 +1,33 @@
 class Solution {
 public:
     int coinChange(vector<int>& coins, int amount) {
-        int m = coins.size();
-        int n = amount;
+        
+        int n = coins.size();
+        int m = amount;
 
-        // Step 1: Initialize DP table
-        vector<vector<int>> DP(m + 1, vector<int>(n + 1, 10001));
+        vector<vector<int>> dp( n+1, vector<int> (m+1, 10001));
 
-        // Step 2: Fill the first row (0 coins) with INT_MAX - 1 for all positive amounts
-        // for (int j = 1; j <= n; j++) {
-        //     DP[0][j] = INT_MAX - 1;
-        // }
+        dp[0][0] = 0;
 
-        DP[0][0]=0;
-        // Step 3: Fill the rest of the table
-        for (int i = 1; i <= m; i++) {
-            for (int j = 0; j <= n; j++) {
-                if (coins[i - 1] > j) {
-                    // Coin can't be included
-                    DP[i][j] = DP[i - 1][j];
-                } else {
-                    // Either take the coin or don't take it
-                    DP[i][j] = min(DP[i - 1][j], 1 + DP[i][j - coins[i - 1]]);
+        for (int i=0; i<=n; i++) dp[i][0] = 0;
+
+        for (int i=1; i<=n ;i++){
+            for (int j=1; j<=m; j++){
+
+                if ( coins[i-1] > j) dp[i][j] = dp[i-1][j];  //  cant pick cuz EX: we can never from an amount of 1 rs from 2 rupee coin
+
+                else {
+                    dp[i][j] = min(dp[i-1][j],  1+ dp[i][j- coins[i-1]]);
                 }
+
             }
         }
 
-        return DP[m][n] == 10001 ? -1 : DP[m][n];
+        // for (auto i : dp){
+        //     for (auto k: i) cout<<k<<" ";
+        //     cout<<endl;
+        // }
+
+        return (dp.back().back() == 10001) ? -1 : dp.back().back();
     }
 };
