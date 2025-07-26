@@ -1,24 +1,31 @@
-void HelperFunction(TreeNode* root, int & min_height, int height){
+int DFS( TreeNode* root, int &min_height, int temp_height){
 
-    if (!root) return ;
+    if ( root == NULL) return 0;
 
-    if (!root->left and !root->right) min_height = min(min_height, height);
+    else if ( !root->left  &&  !root->right){
+        min_height = min(min_height, temp_height);
+    }
 
-    HelperFunction(root->left, min_height, height+1);
+    DFS(root->left, min_height, temp_height +1);
 
-    HelperFunction(root->right, min_height, height+1);
+    DFS(root->right, min_height, temp_height +1);
+
+    return 0;
+
+    
 
 }
+
 class Solution {
 public:
     int minDepth(TreeNode* root) {
+        
+        int min_height = INT_MAX;
+        int temp_height = 1;
 
         if (!root) return 0;
-        
-        int height = 1;
-        int min_height = INT_MAX;
 
-        HelperFunction(root, min_height, height);
+        DFS(root, min_height, temp_height);
 
         return min_height;
     }
