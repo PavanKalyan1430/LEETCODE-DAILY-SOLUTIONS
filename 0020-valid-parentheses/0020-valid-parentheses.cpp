@@ -4,7 +4,8 @@ public:
         
         stack <char> s;
 
-        for (auto i : str){
+        for (char i : str){
+
 
             if (s.empty() or i== '(' or i=='{' or i=='[' ) s.push(i);
 
