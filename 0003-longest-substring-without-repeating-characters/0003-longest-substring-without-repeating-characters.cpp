@@ -7,7 +7,6 @@ public:
         int max_len = 0;
 
         for (int right =0; right<s.size(); right++){
-
             m[s[right]] +=1;
 
             while( m[s[right]] > 1){
