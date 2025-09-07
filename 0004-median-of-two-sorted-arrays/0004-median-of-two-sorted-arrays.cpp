@@ -5,7 +5,7 @@ public:
 
         int i =0;
         int j = 0;
-
+        
         vector <int> result;
 
         while (i <nums1.size() and j < nums2.size()){
@@ -32,14 +32,14 @@ public:
             j++;
         }
 
-        for (int i : result) cout<<i<<" ";
-
-        if (result.size() % 2== 0)  return (result[0] + result.back() ) / 2.0;
-
-        else return result[ result.size() / 2] / 1.0;
+        int n = result.size();
 
 
-        return 0;
+        if (n % 2 == 0) {
+            return ( result[n / 2] + result[n/ 2 - 1] ) / 2.0;
+        }
+
+        return result[n/2];
 
     }
 };
