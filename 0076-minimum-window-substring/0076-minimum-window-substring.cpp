@@ -2,15 +2,10 @@ class Solution {
 public:
     string minWindow(string nums, string t) {
         
-        unordered_map <char, int> check;
-        unordered_map <char , int> m;
+        unordered_map <char, int> check, m;
 
-        int  start;
-        int  left = 0;
-        int  len = 0;
-        int need_count;
-        int have_count = 0;
-        int min_len =INT_MAX;
+        int  left = 0, len = 0, need_count, start;
+        int have_count = 0, min_len =INT_MAX;
         string result= "";
 
        for (int i=0; i<t.size(); i++){
