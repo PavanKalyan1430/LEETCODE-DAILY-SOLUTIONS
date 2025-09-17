@@ -3,19 +3,23 @@ public:
     int lengthOfLongestSubstring(string s) {
         
         unordered_map <char, int> m;
+
+        int result = 0;
         int left = 0;
-        int max_len = 0;
 
-        for (int right =0; right<s.size(); right++){
-            m[s[right]] +=1;
-
-            while( m[s[right]] > 1){
+        for (int right=0; right<s.size(); right++){
+            m[s[right]]++;
+            
+            while (m[s[right]] > 1){
                 m[s[left]]--;
-                left +=1;
+                left++;
             }
-            max_len = max(max_len , (right-left)  + 1);
+
+            result = max(result , right-left+1);
+
         }
 
-        return max_len;
+        return result;
+
     }
 };
