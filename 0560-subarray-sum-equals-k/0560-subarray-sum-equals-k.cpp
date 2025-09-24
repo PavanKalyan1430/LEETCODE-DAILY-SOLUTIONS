@@ -17,8 +17,8 @@ public:
             if (m.count(comp)){
                 result += m[comp];
             }
-
             m[prefix_sum]++;
+
         }
 
         return result;
