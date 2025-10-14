@@ -9,7 +9,6 @@ void fun(vector<vector<int>> &result, vector<int> &temp, vector<int>&nums,int ta
 
     if (nums[i] <= target){
         temp.push_back(nums[i]);
-        cout<<i<<" ";
         fun(result, temp, nums, target-nums[i], i);
         temp.pop_back();}
 
