@@ -1,29 +1,41 @@
-class Solution {
-public:
-    void func(vector<int>& nums, int start, vector<int>& temp, vector<vector<int>>& result){
-        if (start == nums.size()){
-            result.push_back(temp);  //Store current subset
-            return;
-        }
+void fun(vector<int> &nums,vector<int> &temp, vector<vector<int>> &result, int start, int n){
 
+    
+        result.push_back(temp);
+    
 
+    for (int i= start; i<n; i++){
+
+        if ( i > start and nums[i] == nums[i-1]) continue;
+
+      
+
+            temp.push_back(nums[i]);
+
+            fun(nums, temp, result, i+1, n);
+
+            temp.pop_back();
 
         
-            //INCLUDE current element
-            temp.push_back(nums[start]);
-            func(nums, start + 1, temp, result);
 
-            //EXCLUDE (backtrack)
-            temp.pop_back();
-            func(nums, start+1, temp, result);
+    }
+
 }
 
 
+class Solution {
+public:
     vector<vector<int>> subsets(vector<int>& nums) {
-
+        
         vector<vector<int>> result;
         vector<int> temp;
-        func(nums, 0, temp, result);
+        int start = 0;
+        int n = nums.size();
+
+        fun(nums, temp, result, start, n);
+
+
         return result;
+
     }
 };
