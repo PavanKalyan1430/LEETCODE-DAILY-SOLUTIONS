@@ -1,45 +1,46 @@
-void fun(vector<vector<int>> &result, vector<int>&temp, vector<int>& nums, int target, int start){
+void fun(vector<int>& nums, vector<int>& temp, vector<vector<int>>& result, int start, int n, int target){
 
-      if(target < 0) return;
+        if ( target == 0){
+            result.push_back(temp);
+            return;
+        }
 
-      else if(target == 0)  result.push_back(temp);
+        for (int i= start; i<n; i++){
 
-      else{
-             for (int i=start ; i<nums.size(); i++){
-                
-                if (i > start and nums[i] == nums[i-1]) continue;
+            if ( nums[i] > target)  break;
 
-                temp.push_back(nums[i]);
-                fun(result, temp, nums, target-nums[i], i+1);      
-                temp.pop_back();}
-      }
+            if ( i > start and nums[i] == nums[i-1]) continue;
 
-                
-    
+            temp.push_back(nums[i]);
 
-   
-    
+            fun(nums, temp, result, i+1 , n, target - nums[i]);
 
-    
- 
+            temp.pop_back();
+        }
+
+        return;
+
 }
-
 
 class Solution {
 public:
     vector<vector<int>> combinationSum2(vector<int>& nums, int target) {
         
-        vector<vector<int>> result ;
-        vector<int> temp;
-
-        int start = 0;
-
         sort(nums.begin(), nums.end());
 
-        for(int i: nums) cout<<i<<" ";
-        fun(result, temp, nums, target, start);
+        vector<vector<int>> result;
+        vector<int> temp;
+        int start  = 0;
+        int n = nums.size();
+
+        fun(nums, temp, result, start, n, target);
 
         return result;
+
+
+
+
+
 
 
     }
