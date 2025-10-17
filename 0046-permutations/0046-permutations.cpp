@@ -1,17 +1,17 @@
-void fun(vector <int> nums, vector<vector<int>> &result, vector <int> temp, int start){
+void fun(vector <int> nums, vector<vector<int>> &result, vector <int> temp,int start){
 
        if (temp.size()==nums.size()){
         result.push_back(temp);
         return ;
       }
 
-      for (int i= 0; i<nums.size(); i++){
+      for (int i= start; i<nums.size(); i++){
 
         if  (find(temp.begin(), temp.end(), nums[i]) != temp.end()) continue;
         
             temp.push_back(nums[i]);
 
-            fun(nums, result, temp, i+1);
+            fun(nums, result, temp, start);
 
             temp.pop_back();
       }
