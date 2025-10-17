@@ -1,17 +1,18 @@
 void fun(vector<int>& nums,  vector<int>& temp,  vector<vector<int>>& result, vector<bool>& check, int n){
 
     if ( temp.size() == n){
-        
-        if (find(result.begin(), result.end(), temp) == result.end()){
 
         result.push_back(temp);
-        }
-        return;
-    }
+        
+    
+        return;}
+    
 
     for (int i=0; i<n; i++){
 
-        if (check[i] == false){
+        if (check[i]) continue;
+        
+        if ( i > 0 and nums[i] == nums[i-1] and check[i-1] == true) continue;
 
             temp.push_back(nums[i]);
             check[i] = true;
@@ -23,7 +24,7 @@ void fun(vector<int>& nums,  vector<int>& temp,  vector<vector<int>>& result, ve
 
         }
 
-    }
+    
 
     return;
 
