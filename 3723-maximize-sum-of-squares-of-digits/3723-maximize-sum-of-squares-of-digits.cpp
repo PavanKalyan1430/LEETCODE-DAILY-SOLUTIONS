@@ -1,31 +1,16 @@
 class Solution {
 public:
     string maxSumOfSquares(int num, int sum) {
-        string result = "";
-        int addy = 0;
-
-        if (num * 9 < sum)
-            return "";
-
-        int dup_sum = sum;
-        addy = 0;
-
-        // for (int j = 0; j < num; j++) {
-
-            for (int i = 9; i >= 0; i--) {
-
-                if (dup_sum - i >= 0) {
-                    dup_sum -= i;
-                    result += (i + '0');
-                    addy += i;
-                    i++;
-
-                    if (result.size() == num and addy == sum)
-                        return result;
-                }
+        //if(num<=100 || num==100000){
+            if(9*num<sum) return "";
+        //}
             
+        string ans;
+        for(int i=num-1;i>=0;i--){
+            int d=min(9, sum);
+            ans.push_back('0'+d);
+            sum -= d;
         }
-
-        return result;
+        return ans;
     }
 };
