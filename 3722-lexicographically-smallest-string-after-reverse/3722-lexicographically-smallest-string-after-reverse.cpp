@@ -2,33 +2,18 @@ class Solution {
 public:
     string lexSmallest(string s) {
 
-        int n = s.size()-1;
         string result = s;
         
-        for (int i=0; i<s.size(); i++){
+        for (int i=0; i<=s.size(); i++){
 
-            for (int j=i; j<s.size(); j++){
+            string dup1 = s;
+            string dup2 = s;
 
-                string first = s.substr(0 , i);
-                string first_dup = first;
-                reverse(first.begin(), first.end());
+            reverse(dup1.begin(), dup1.begin()+i);
 
-                string mid = s.substr(i , j-i+1);
+            reverse(dup2.end()-i, dup2.end());
 
-                string last = s.substr(j+1, n-j);
-
-                string fir_rev = first+mid+last;
-
-                reverse(last.begin(), last.end());
-
-                string last_rev = first_dup + mid + last;
-
-                string newstr = first+mid+last;
-
-                result = min(result, min(last_rev,fir_rev));
-
-
-            }
+            result = min(result, min(dup1, dup2));
 
         }
 
