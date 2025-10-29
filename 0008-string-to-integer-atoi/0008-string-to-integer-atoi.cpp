@@ -2,53 +2,58 @@ class Solution {
 public:
     int myAtoi(string s) {
         
-        string str = "";
-        long long result = 0;
-        int negative_flag = 1;
+        int result = 0;
+        int i =  0;
+        int sign = 1;
         int flag = 0;
+        int digit;
+        int mark = 0;
 
-        // Trim leading spaces
-        for (char i : s){
-            if (i != ' '){               
-                str += i;
-                flag = 1;
-            }
-            else if (flag) break;
+        while(i <s.size() and s[i] == ' ' )i++;
+
+        //cout<<i;
+
+        if (s[i] == '-'){
+            sign =  -1;
+            i++;
+        }
+        else if (s[i] == '+'){
+            sign =  1;
+            i++;
         }
 
-        cout << str << endl;
-        int inc = 0;
+       // cout<<i<<" ";
 
-        // negative sign
-        if (str[0] == '-' ){
-            negative_flag = -1;
-            inc = 1;
-        }
-        
-        else if (str[0] == '+'){
-            inc = 1;
-        }
+        while(i < s.size()){
 
-        
-        for (int i = inc; i < str.size(); i++){
-            if (!isdigit(str[i])) break;
-
-            int digit = str[i] - '0';
-
-            // overflow prevention
-            if (result > (INT_MAX - digit) / 10) {
-                result = (negative_flag == 1) ? INT_MAX : INT_MIN;
-                return result;
+            if (!isdigit(s[i])){
+                break;
             }
 
-            result = result * 10 + digit;
+            else{
+                digit = s[i] - '0';
+
+                cout<<"digit  "<<digit<<"  ";
+
+                if ( (INT_MAX - digit) / 10 >= result){
+
+                    result = (result * 10) + digit;
+                    cout<<result<<endl;
+   
+                } 
+
+                else mark = 1;
+            }
+
+            i++;
+
         }
 
-        result = result * negative_flag;
+        if (mark == 1 and sign == 1) return INT_MAX;
+        else if (mark == 1 and sign == -1) return INT_MIN;
 
-      
-       
+        return result * sign;
+        
 
-        return result;
     }
 };
