@@ -1,48 +1,45 @@
-void fun (vector<vector<int>> &result , vector<int> &temp, vector<int> &nums, int target, int start){
+void fun(vector<int> &nums, vector<int> &temp, vector<vector<int>> &result, int i, int target, int n ){
 
-    if (target <= 0) {
-        
-        if ( target == 0){
-            result.push_back(temp);
-        }
-        return ;
+
+
+    if (target <= 0 || i == n){
+
+        if (target == 0) result.push_back(temp);
+
+        return;
     }
 
-
-    for (int i= start ; i<nums.size(); i++){
-
-        if (nums[i] > target) continue;
-         temp.push_back(nums[i]);
-
-         fun (result, temp, nums, target-nums[i], i);
-
-          temp.pop_back();
-          //fun(result, temp, nums, target, start+1);
-
+    if (nums[i] > target) return;
+    
+    if (nums[i] <= target){
+        temp.push_back(nums[i]);
+        fun(nums, temp, result, i, target-nums[i], n );
+        temp.pop_back();
     }
 
-   
-
-    
-
-   
-    
-
+    fun(nums, temp, result, i+1, target, n);
 
 }
-
 
 
 class Solution {
 public:
     vector<vector<int>> combinationSum(vector<int>& nums, int target) {
         
+
+        sort(nums.begin(), nums.end());
+
+
         vector<vector<int>> result;
-        vector <int> temp;
+        vector<int> temp;
         int start = 0;
-        fun (result , temp , nums , target, start);
+        int n = nums.size();
+        fun(nums, temp, result, start, target, n);
 
         return result;
+
+
+
 
     }
 };
