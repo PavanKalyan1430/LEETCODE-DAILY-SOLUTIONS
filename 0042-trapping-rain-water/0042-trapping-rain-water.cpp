@@ -2,43 +2,49 @@ class Solution {
 public:
     int trap(vector<int>& heights) {
         
-        vector<int> left_max;
-        vector<int> right_max;
-
+        vector <int> left;
+        vector <int> right(heights.size());
         int result = 0;
 
+        int left_max_height = 0;
+        int right_max_height = 0;
 
-        int l_max = 0;
-        int r_max = 0;
+        for(int i=0; i<heights.size(); i++){
 
-        for (int i=0; i<heights.size(); i++){
-            l_max = max(l_max, heights[i]);
-            left_max.push_back(l_max);
+            left_max_height = max(left_max_height, heights[i]);
+
+            left.push_back(left_max_height);
+
         }
 
-        vector<int> new_heights = heights;
+        for(int i=heights.size()-1; i>=0 ; i--){
 
-        for (int i=new_heights.size()-1; i>=0; i--){
-            r_max = max(r_max, heights[i]);
-            right_max.push_back(r_max);
+            right_max_height = max(right_max_height, heights[i]);
+
+            right[i] =  right_max_height;
+
         }
 
-        reverse(right_max.begin(), right_max.end());
-
-    
-
-        for (int i: right_max) cout<<i<<" ";
-
+        for(int i: left) cout<<i<<" ";
 
         cout<<endl;
 
 
-        for (int i: left_max) cout<<i<<" ";
+        for (auto j : right) cout<<j<<" ";
 
-        for (int i =0; i<heights.size(); i++){
-            result+=  ( min(left_max[i], right_max[i]) - heights[i] );
+        for (int i=0; i<heights.size(); i++){
+            result +=( min(left[i], right[i]) - heights[i]);
         }
 
+
         return result;
+
+
+
+
+
+
+
+
     }
 };
