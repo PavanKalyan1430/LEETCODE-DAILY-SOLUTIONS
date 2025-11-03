@@ -11,10 +11,16 @@ public:
 
                 if (time[left] <= time[right]){
                     result+= time[left];
-                    left++;
+                    cout<<time[left]<<" ";
+                    left=right;
                 }
-                else result+= time[right];
+                else {
+                    result+= time[right];
+                    cout<<time[right]<<" ";}
+                    cout<<"right index : "<< right<<endl;
                 // result += min(time[left], time[right]);
+
+                
 
 
             }
