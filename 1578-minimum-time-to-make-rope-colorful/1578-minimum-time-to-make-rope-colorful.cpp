@@ -2,32 +2,45 @@ class Solution {
 public:
     int minCost(string colors, vector<int>& time) {
         
-        int left = 0;
+
         int result = 0;
-        
-        for (int right = 0; right<colors.size(); right++){
+        int sumy =0;
+        int maxi  =0;
+        int flag = 0;
 
-            if (colors[left] == colors[right] and right-left+1 >= 2 ){
 
-                if (time[left] <= time[right]){
-                    result+= time[left];
-                    cout<<time[left]<<" ";
-                    left=right;
-                }
-                else {
-                    result+= time[right];
-                    cout<<time[right]<<" ";}
-                    cout<<"right index : "<< right<<endl;
-                // result += min(time[left], time[right]);
+        for (int i=0; i<colors.size()-1; i++){
 
-                
+            cout<<result<<" ";
+
+            if (colors[i] == colors[i+1]){
+
+                sumy += time[i];
+                flag = 1;
+                maxi = max(maxi,max(time[i], time[i+1]));
 
 
             }
 
-            else if (colors[left] != colors[right]) left = right; 
+            else {
+                if (flag) sumy+= time[i];
+                flag = 0;
+
+                result += (sumy- maxi);
+                maxi = 0;
+                sumy = 0;
+                
+            }
+        }
+
+        if (sumy > 0){
+            sumy += time.back();
+
+            result+= (sumy-maxi);
         }
 
         return result;
+
+
     }
 };
