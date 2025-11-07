@@ -2,41 +2,33 @@ class Solution {
 public:
     vector<int> findAnagrams(string s, string p) {
         
-        int left = 0;
         unordered_map <char, int> need, have;
-        vector <int> result;
 
-        for (int i=0; i<p.size(); i++){
-            need[p[i]]++;
-        }
+        int left = 0, need_count = 0 , have_count =0;
+        vector<int> result;
 
-        int need_count = need.size();
-        int have_count = 0;
+
+        for (int i=0; i<p.size(); i++) need[p[i]]++;
+        need_count = need.size();
 
         for (int right = 0; right<s.size(); right++){
 
             have[s[right]]++;
 
-            if (need.count(s[right]) and need[s[right]] == have[s[right]]) have_count++;
+            if ( need[s[right]] == have[s[right]]) have_count+=1;
 
-            while ( right- left + 1>= p.size()) {
+            while(  right-left+1 >= p.size()){
 
-                
-                if (need_count == have_count and right-left+1 == p.size() ){
-                    result.push_back(left);
-                }
-
-                if (need.count(s[left]) and need[s[left]] == have[s[left]]  ) have_count--;
-
-                have[s[left]]--;
-                if (have[s[left]] == 0) have.erase(s[left]);
-                left++;
-                cout<<  "after drop  "<<need_count <<"  " <<have_count<<endl;
-                cout<<s[left] <<"  " <<s[right]<<endl;
+                if (right- left+1  == p.size() and have_count == need_count) result.push_back(left);
 
 
+                if (need.count(s[left]) and have[s[left]] == need[s[left]]) have_count-=1;
+                have[s[left]]-=1;
+
+                left+=1;
 
             }
+
         }
 
         return result;
