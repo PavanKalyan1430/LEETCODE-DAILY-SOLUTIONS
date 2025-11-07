@@ -20,7 +20,8 @@ public:
             if (need.count(s[right]) and need[s[right]] == have[s[right]]) have_count++;
 
             while ( right- left + 1>= p.size()) {
-   
+
+                
                 if (need_count == have_count and right-left+1 == p.size() ){
                     result.push_back(left);
                 }
@@ -30,6 +31,10 @@ public:
                 have[s[left]]--;
                 if (have[s[left]] == 0) have.erase(s[left]);
                 left++;
+                cout<<  "after drop  "<<need_count <<"  " <<have_count<<endl;
+                cout<<s[left] <<"  " <<s[right]<<endl;
+
+
 
             }
         }
