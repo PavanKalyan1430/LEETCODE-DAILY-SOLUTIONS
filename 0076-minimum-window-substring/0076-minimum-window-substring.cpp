@@ -23,9 +23,9 @@ public:
                 have_count ++;
             }
 
-            while ( have_count >= need_count ){
+            while ( have_count == need_count ){
 
-                if (have_count == need_count){
+                
                     len =  right-left+1;
 
                     if (len < min_len){
@@ -33,12 +33,11 @@ public:
                         start = left;
                     }
 
-                }
+  
 
                 if (check.count(nums[left]) and m[nums[left]] == check[nums[left]]  ) have_count--;
 
                 m[nums[left]]--;
-                if (m[nums[left]] == 0) m.erase(nums[left]);
                 left++;
             }
         }
