@@ -1,49 +1,53 @@
 class Solution {
 public:
-    string minWindow(string nums, string t) {
+    string minWindow(string s, string t) {
         
-        unordered_map <char, int> check, m;
+        unordered_map <char , int> need, have;
 
-        int  left = 0, len = 0, need_count, start;
-        int have_count = 0, min_len =INT_MAX;
-        string result= "";
+        int need_count = 0, have_count = 0;
+        int left = 0;
 
-       for (int i=0; i<t.size(); i++){
-        check[t[i]]++;
-       }
+        int start = 0, end = 0;
+        int  min_len = INT_MAX;
 
-       need_count = check.size();
+        for (int i=0; i<t.size(); i++) need[t[i]]++;
+        need_count = need.size();
 
 
-        for (int right = 0; right<nums.size(); right++){
- 
-            m[nums[right]]++;
+        for (int right = 0; right<s.size(); right++){
 
-            if (check.count(nums[right]) and check[nums[right]] == m[nums[right]] ){
-                have_count ++;
+            have[s[right]]++;
+            
+            if (need.count(s[right]) and have[s[right]] == need[s[right]]) have_count +=1;
+
+      
+
+
+            while(have_count >= need_count){
+
+                cout<<left <<"   " << right<<endl;
+
+                if (right-left+1 < min_len){
+                    start = left;
+                    end = right ;
+                    min_len = right-left+1;
+                }
+
+                have[s[left]]-=1;
+
+                if (need[s[left]] > have[s[left]]) have_count-=1;
+
+                left+=1;
+
             }
+            
 
-            while ( have_count == need_count ){
-
-                
-                    len =  right-left+1;
-
-                    if (len < min_len){
-                        min_len = len;
-                        start = left;
-                    }
-
-  
-
-                if (check.count(nums[left]) and m[nums[left]] == check[nums[left]]  ) have_count--;
-
-                m[nums[left]]--;
-                left++;
-            }
         }
 
+      //  cout<<start<<"  "<<end;
 
-        return (min_len != INT_MAX) ? nums.substr(start, min_len) : "";
-
+        return (min_len == INT_MAX) ? "" : s.substr(start, (end-start+1));
     }
+
+
 };
