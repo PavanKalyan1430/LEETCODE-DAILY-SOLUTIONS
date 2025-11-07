@@ -18,7 +18,7 @@ public:
 
             have[s[right]]++;
             
-            if (need.count(s[right]) and have[s[right]] == need[s[right]]) have_count +=1;
+            if ( have[s[right]] == need[s[right]]) have_count +=1;
 
       
 
