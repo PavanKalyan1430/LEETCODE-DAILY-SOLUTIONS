@@ -7,7 +7,7 @@ public:
         int need_count = 0, have_count = 0;
         int left = 0;
 
-        int start = 0, end = 0;
+        int start = 0;
         int  min_len = INT_MAX;
 
         for (int i=0; i<t.size(); i++) need[t[i]]++;
@@ -29,7 +29,6 @@ public:
 
                 if (right-left+1 < min_len){
                     start = left;
-                    end = right ;
                     min_len = right-left+1;
                 }
 
@@ -44,9 +43,8 @@ public:
 
         }
 
-      //  cout<<start<<"  "<<end;
 
-        return (min_len == INT_MAX) ? "" : s.substr(start, (end-start+1));
+        return (min_len == INT_MAX) ? "" : s.substr(start, min_len);
     }
 
 
