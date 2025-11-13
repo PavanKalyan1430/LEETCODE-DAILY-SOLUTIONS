@@ -1,38 +1,42 @@
-void fun(vector<int>&nums, vector<vector<int>>&result, int n , int k, vector<int>&temp, int i){
+void fun(vector<int>&nums,vector<int>&temp, vector<vector<int>>&result, int i, int n , int k){
 
-    if (i == n){
-        if (temp.size()== k) result.push_back(temp);
+    
 
+    if (temp.size() >= k){
+        result.push_back(temp);
         return;
     }
 
+    if (i >=n ) return;
+
     temp.push_back(nums[i]);
-    fun(nums,result,n,k,temp,i+1);
+
+    fun(nums, temp, result, i+1, n, k);
+
     temp.pop_back();
-    fun(nums, result, n, k, temp, i+1);
+
+    fun(nums, temp, result, i+1, n, k);
 
     return;
 
 }
 
 
-
-
 class Solution {
 public:
     vector<vector<int>> combine(int n, int k) {
         
+        vector<vector<int>> result ;
         vector<int> nums;
-
-        for (int i=1; i<=n; i++)nums.push_back(i);
-
         vector<int> temp;
 
+        for (int i=1; i<=n; i++) nums.push_back(i);
 
-        vector<vector<int>> result;
-        fun(nums,result, n , k, temp, 0);
 
+        fun(nums,temp, result, 0,n,k);
 
         return result;
+
+
     }
 };
