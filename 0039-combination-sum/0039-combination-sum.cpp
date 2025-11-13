@@ -1,30 +1,24 @@
-void fun(vector<int>&nums, vector<int>&temp, vector<vector<int>>&result, int target, int i){
+void fun(vector<int>&nums, vector<int>&temp, vector<vector<int>>&result, int target, int start){
 
-    
-
-    if (target <= 0 || i >= nums.size()){
+    if (target <= 0){
         
         if (target == 0) result.push_back(temp);
 
         return;
     }
 
-    if (nums[i] > target) return;
+    for (int i= start; i<nums.size(); i++){
 
-    temp.push_back(nums[i]);
+        if ( nums[i] > target) break;
 
-    fun(nums, temp, result, target-nums[i], i);
+        temp.push_back(nums[i]);
 
-    temp.pop_back();
+        fun(nums, temp, result, target-nums[i], i);
 
-    fun(nums, temp, result, target, i+1);
+        temp.pop_back();
+    }
 
     return;
-
-
-
-
-
 
 }
 
