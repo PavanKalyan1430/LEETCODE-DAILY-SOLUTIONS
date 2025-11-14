@@ -1,15 +1,16 @@
-bool is_valid(vector<vector<char>>& board, int row, int col, char c){
+bool can_solve(vector<vector<char>>& board,int i, int j,  char c){
 
-    for (int i=0 ; i<9 ; i++){
+    for (int k=0; k<9; k++){
 
-        if (board[row][i] == c) return false;
+        if (board[k][j] == c) return false;
 
-        if (board[i][col] == c) return false;
+        if (board[i][k] == c ) return false;
 
-        int ro =  3 * (row/3) + i/3;
-        int co = 3 * (col/3) + i % 3;
+        int ro = (i/3) * 3 + (k/3);
+        int co = (j/3) * 3 + k % 3;
 
         if (board[ro][co] == c) return false;
+
     }
 
     return true;
@@ -18,40 +19,60 @@ bool is_valid(vector<vector<char>>& board, int row, int col, char c){
 
 
 
-bool solve(vector<vector<char>>& board){
 
-    for (int i=0; i<9; i++){
-        for (int j=0; j<9; j++){
+bool solve (vector<vector<char>>& board, int rows, int col, int i, int j){
 
-            if (board[i][j] == '.'){
+    if (i == rows-1 && j== col ) return true;
 
-                for (char c = '1'; c<='9'; c++){
+    if (j == col){
+        j = 0;
+        i+=1;
+    }
 
-                    if (is_valid(board, i, j, c)){
-                        board[i][j] = c;
+    if (i >= rows ) return true;
 
-                        if ( solve(board) == true) return true;
 
-                        else board[i][j] = '.';
+   // cout<<i<<" "<<j<<endl;
 
-                    }
+
+        if (board[i][j] == '.'){
+            for (char c = '1'; c<='9'; c++){
+                
+                if ( can_solve(board,i,j, c) == true ){
+                    board[i][j] = c;
+
+                    if (solve(board, rows, col,i, j+1) == true) return true;
+                    board[i][j] = '.';
                 }
-
-                return false;
 
             }
 
-        }
-    }
+            return false;
 
-    return true;
+        }
+
+        else {
+            return solve(board, rows, col,i, j+1);
+        }
+
+
+
 
 }
+
+
+
 
 class Solution {
 public:
     void solveSudoku(vector<vector<char>>& board) {
         
-        solve(board);
+        int rows = board.size();
+        int col = board[0].size();
+        int i = 0;
+        int j = 0;
+
+        solve(board, rows, col, i, j);
+
     }
 };
