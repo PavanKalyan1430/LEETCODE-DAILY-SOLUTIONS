@@ -1,6 +1,6 @@
 void fun(vector<vector<int>> &result, vector<int> &nums, vector<int> &temp, int target, int k, int i){
 
-    if (target < 0 || i >= 9 ) return;
+    if (target < 0 ) return;
 
     if (temp.size() >= k ){
         if (target == 0) result.push_back(temp);
@@ -8,7 +8,7 @@ void fun(vector<vector<int>> &result, vector<int> &nums, vector<int> &temp, int 
         return;
     }
 
-    if (nums[i] > target) return;
+    if ( i >= 9 || nums[i] > target) return;
 
     
 
