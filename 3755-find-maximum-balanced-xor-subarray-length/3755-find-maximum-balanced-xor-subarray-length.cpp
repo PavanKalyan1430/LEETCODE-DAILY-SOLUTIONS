@@ -14,7 +14,7 @@ public:
 
             // look for -balance in mp to counteract the current balance
             // this will yield a balance of zero (same amount of even/odd)
-            pair<int,int> key = { runningXOR, balance };
+            pair<int,int> key = { runningXOR, -balance };
 
             if (mp.count(key)) res = max(res, i - mp[key]);
             else mp[key] = i;
