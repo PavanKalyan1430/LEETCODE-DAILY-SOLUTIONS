@@ -5,20 +5,18 @@ public:
         string word = "a";
 
         while(word.size() < k){
-            int size = word.size();
-
-            for (int i=0; i<size ;i++){
-
-                if (word.size() >= k) break;
-
-                char c = word[i];
-                c=  (c == 'z') ? 'a' : c+1;
-                word += c;
+            string w = "";
+            for (int i=0; i<word.size(); i++){
+                w += (word[i] + 1);
             }
+
+            word += w;
 
         }
 
-        cout<<word<<endl;
+        //cout<< word;
+
         return word[k-1];
+
     }
 };
