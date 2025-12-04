@@ -16,28 +16,19 @@ public:
 
             else if (s[i] == 'S'){
                 coll = 1;
-
                 count += (max_r);
                 max_r = 0;
             }
 
-            else if (s[i] == 'L' &&  (max_r !=0  || coll == 1)  ){
+            else{
 
-                coll = 1;
-
-                if (max_r == 1){
-                    count += 2;
+                if (max_r !=0 ){
+                    (max_r == 1) ? count +=2 : count += (max_r + 1);
+                    coll = 1;
                     max_r = 0;
                 }
 
-                else if (max_r > 1){
-                    count += (max_r + 1);
-                    max_r = 0;
-                }
-
-                else{
-                    count += 1;
-                    }
+                else if (coll == 1) count +=1;
 
             }
         }
