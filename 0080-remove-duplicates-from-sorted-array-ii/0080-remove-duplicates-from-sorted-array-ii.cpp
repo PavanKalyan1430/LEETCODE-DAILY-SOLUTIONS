@@ -2,30 +2,19 @@ class Solution {
 public:
     int removeDuplicates(vector<int>& nums) {
         
-        int h = 0;
-        int cnt = 1;
+        int k = 2;
 
-        int i;
+        if (nums.size() <= 2) return nums.size();
 
+        for (int i=2; i<nums.size(); i++){
 
-        for ( i=0; i<nums.size()-1; i++){
-           
-            if (cnt <= 2){
-                nums[h] = nums[i];
-                h+=1;
+            if (nums[i] != nums[k-2]){
+                nums[k++] = nums[i];
             }
-
-             (nums[i] == nums[i+1]) ? cnt+=1 : cnt = 1;
 
         }
 
-        if (cnt <= 2) nums[h++] = nums[i];
+        return k;
 
-
-        return h;
-    
     }
-
-
-    
 };
