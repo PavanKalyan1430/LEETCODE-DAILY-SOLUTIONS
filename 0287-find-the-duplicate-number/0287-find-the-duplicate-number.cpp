@@ -1,28 +1,27 @@
 class Solution {
 public:
     int findDuplicate(vector<int>& nums) {
-        
+
+        int i =0;
         int n = nums.size();
-        int i= 0;
-        int correct_index ;
 
-        while ( i < n) {
 
-            correct_index = nums[i]-1;
+        while (i < n){
+            int correct_index = nums[i]-1;
 
-            if ( nums[i] != nums[correct_index]){
-                swap(nums[i] , nums[correct_index]);
+            if (nums[i] != nums[correct_index]){
+                swap(nums[i], nums[correct_index]);
             }
 
-            else i++;
-
+            else i+=1;
         }
 
-        for (int i=0; i<nums.size(); i++){
+    for (auto i : nums) cout<<i<<" ";
 
-            if ( nums[i] != i+1) return nums[i];
+        for (int i=0; i<n; i++){
+            if (nums[i] != i+1) return nums[i]; 
         }
 
-        return 0;
+        return n;
     }
 };
