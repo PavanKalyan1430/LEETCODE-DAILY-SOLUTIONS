@@ -1,42 +1,36 @@
 class Solution {
 public:
-    vector<string> validateCoupons(vector<string>& code, vector<string>& b, vector<bool>& active) {
-
-        string word;
-        int flag;
-        vector <string> result;
-
-
-        for (int i=0; i<b.size(); i++){
-            for (int j=0; j<b.size()-1; j++){
-
-                if (b[j] > b[j+1]){
-                    swap(b[j], b[j+1]);
-                    swap(code[j], code[j+1]);
-                    swap(active[j], active[j+1]);
-                }
-            }
-        }
-
-        for (int  i=0; i<b.size(); i++){
-
-            string word = code[i];
-
-            if (active[i] and word.size()!=0 and b[i]!= "invalid"){
-                flag = 1;
-                for (int j=0; j<word.size(); j++){
-                    if ( word[j] != '_' and !isalnum(word[j])) {
-                        flag = 0;
-                        break;
-                    }
-                }
-
-                if (flag) result.push_back(word);
-            }
-
-        }
-       // sort(result.begin(), result.end());
-        return result;
+    vector<string> validateCoupons(vector<string>& c, vector<string>& b, vector<bool>& a) {
         
+
+        map<pair<string, string>, vector<string>> m;
+
+        for (int i=0; i<c.size(); i++){
+            
+            if (a[i] and c[i] != "" and b[i] !="invalid"){
+                int flag = 1;
+
+                for (int j=0; j<c[i].size(); j++){
+                    if (c[i][j]!= '_' and !isalnum(c[i][j])) flag = 0;
+                }
+
+                if (flag) m[{b[i] , c[i]}].push_back(c[i]);
+            }
+        }
+
+        vector<string> ans;
+
+        for (auto &p : m) {
+            for (string &s : p.second) {
+                ans.push_back(s);
+            }
+        }
+
+        return ans;
+
+
+        
+
+
     }
 };
