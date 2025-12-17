@@ -1,30 +1,33 @@
+int fun (string &t1 , string&t2 , int i , int j, vector<vector<int>>&dp){
+
+    if (i < 0 || j < 0) return 0;
+
+    if (dp[i][j] != -1) return dp[i][j];
+
+    if (t1[i] == t2[j]){
+        return  dp[i][j] = 1 + fun(t1, t2, i-1, j-1, dp);
+    }
+
+    else{
+        int pickfirst = fun(t1, t2, i, j-1, dp);
+        int picksecond = fun(t1, t2, i-1, j, dp);
+
+        return dp[i][j] = max(pickfirst , picksecond);
+
+    }
+}
+
+
 class Solution {
 public:
-    int longestCommonSubsequence(string text1, string text2) {
+    int longestCommonSubsequence(string t1, string t2) {
         
-        int n = text1.size();
-        int m = text2.size();
+        int n = t1.size();
+        int m = t2.size();
 
-        vector<vector<int>> DP(n+1, vector<int>(m+1, 0));
+        vector <vector<int>> dp(n , vector<int> (m+1, -1));
 
-        for (int i=1; i<=n; i++){
-            for (int j=1; j<=m; j++){
-
-                if (text1[i-1] == text2[j-1]){
-                    DP[i][j] = DP[i-1][j-1] + 1;
-                }
-
-                else {
-                    DP[i][j] = max(DP[i-1][j], DP[i][j-1]);
-                }
-            }
-        }
-
-        return DP[n][m];
-
-      
-
-
+        return fun(t1, t2, n-1, m-1, dp);
 
     }
 };
