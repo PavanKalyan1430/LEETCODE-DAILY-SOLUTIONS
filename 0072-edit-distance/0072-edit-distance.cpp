@@ -1,32 +1,28 @@
 class Solution {
 public:
-    int minDistance(string s1, string s2) {
+    int minDistance(string word1, string word2) {
         
-        int n = s1.size();
-        int m = s2.size();
+        int n = word1.size();
+        int m = word2.size();
 
-        vector<vector<int>> DP(n + 1, vector<int>(m + 1, 0));
-        
-        // Base cases
-        for (int i = 0; i <= n; i++) DP[i][0] = i; // Deleting all from s1
-        for (int j = 0; j <= m; j++) DP[0][j] = j; // Inserting all into s1 to match s2
-        
-        // Fill the DP table
-        for (int i = 1; i <= n; i++) {
-            for (int j = 1; j <= m; j++) {
-                
-                if (s1[i - 1] == s2[j - 1]) {
-                    DP[i][j] = DP[i - 1][j - 1]; // No operation needed
-                } else {
-                    DP[i][j] = 1 + min({
-                        DP[i - 1][j],     // Deletion
-                        DP[i][j - 1],     // Insertion
-                        DP[i - 1][j - 1]  // Replacement
-                    });
+        vector<vector<int>> dp(n+1, vector<int>(m+1, 0));
+
+        for (int i= 1; i<=m ; i++) dp[0][i] = i;
+        for (int i=1 ; i<=n; i++) dp[i][0] = i;
+
+        for (int i=1; i<=n; i++){
+            for (int j = 1; j<=m; j++){
+
+                if (word1[i-1] == word2[j-1]){
+                    dp[i][j] = dp[i-1][j-1];
+                }
+
+                else {
+                    dp[i][j] =  1+ min(dp[i-1][j] , min(dp[i-1][j-1], dp[i][j-1]));
                 }
             }
         }
 
-        return DP[n][m];
+        return dp[n][m];
     }
 };
