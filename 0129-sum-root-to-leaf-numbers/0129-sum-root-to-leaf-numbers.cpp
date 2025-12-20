@@ -10,13 +10,13 @@
  * };
  */
 
-void HelperFunction(TreeNode* root, int ans, vector<int>&result){
+void HelperFunction(TreeNode* root, int ans, int &result){
 
     if (!root) return ;
 
      ans = ans*10 + root->val;
 
-    if (!root->left and !root->right) result.push_back(ans);
+    if (!root->left and !root->right) result += ans;
 
     HelperFunction(root->left, ans, result);
     HelperFunction(root->right, ans, result);
@@ -29,15 +29,13 @@ public:
     int sumNumbers(TreeNode* root) {
         
         int ans = 0;
-        int sum =0;
-        vector<int> result;
+        
+        int result = 0;
         HelperFunction(root, ans, result);
 
-        for (int i: result){
-            sum += i;
-        }
+        
 
-        return sum;
+        return result;
 
 
 
