@@ -5,9 +5,9 @@ void DFS(vector<vector<int>>& adj, vector <int>& visit, int ind){
     visit[ind] = 1;
 
     for (auto i : adj[ind]){
-        if (!visit[i]){
+        // if (!visit[i]){
             DFS(adj, visit, i);
-        }
+        //}
     }
 
 }
@@ -31,7 +31,6 @@ public:
             for (int j = 0; j<c; j++){
                 if (i != j && mat[i][j] == 1){
                     adj[i].push_back(j);
-                    adj[j].push_back(i);
                 }
             }
         }
