@@ -1,35 +1,28 @@
-int fun(vector<int>& nums, int k){
-
-    int left = 0;
-    int cnt = 0;
-    int odd = 0;
-    int n = nums.size();
-
-    for (int right =0; right<n; right++){
-
-        if (nums[right] % 2 != 0) odd+=1;
-        
-        while(odd > k){
-            cnt += (n-right);
-            cout<<left<<" ";
-
-            if (nums[left] % 2 !=0) odd-=1;
-            left +=1;
-        }
-
-    }
-
-    return cnt;
-}
-
-
 class Solution {
 public:
     int numberOfSubarrays(vector<int>& nums, int k) {
         
-        int cnt1 = fun(nums, k);
-        int cnt2 = fun(nums, k-1);
+        for (int i= 0; i<nums.size(); i++){
+            if (nums[i] % 2 == 0) nums[i] = 0;
+            else nums[i] = 1;
+        }
 
-        return abs(cnt1-cnt2);
+        unordered_map <int, int> m;
+        m[0] = 1;
+        int prefix_sum = 0, result = 0;
+
+        for (int i =0; i<nums.size(); i++){
+            prefix_sum += nums[i];
+
+            int comp = prefix_sum - k;
+
+            if (m.count(comp)){
+                result += m[comp];
+            }
+
+            m[prefix_sum] += 1;
+        }
+
+        return result;
     }
 };
