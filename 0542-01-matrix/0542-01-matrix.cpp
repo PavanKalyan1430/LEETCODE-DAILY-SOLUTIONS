@@ -2,61 +2,59 @@ class Solution {
 public:
     vector<vector<int>> updateMatrix(vector<vector<int>>& grid) {
         
+        queue<pair<int, int>> q;
+        vector<int> dx = {0,-1,0,1};
+        vector<int> dy = {1,0,-1,0};
 
+        int r = grid.size();
+        int c = grid[0].size();
 
-
-        int ones = 1;
-        int zeroes = 0;
-        int minutes = 0;
-
-        int rows = grid.size();
-        int columns = grid[0].size();
-
-        queue<pair<int,int>> q; 
-
-        for (int i=0; i<rows ; i++){
-            for (int j= 0 ; j<columns ; j++){
-
-                if (grid[i][j] == 1){
-                    ones+=1;
-                    grid[i][j] = -1;}
-
-                else if (grid[i][j] == 0){
-                    zeroes+=1;
+        int ones = 0, min =0 ;
+        
+        for (int i = 0; i<r; i++){
+            for (int j = 0; j<c; j++){
+                if (grid[i][j] == 0){
                     q.push({i,j});
+                }
+
+                else{
+                    ones += 1;
+                    grid[i][j] = -1;
                 }
             }
         }
 
         if (ones == 0) return grid;
 
-        vector<int> dx = {0,-1,0,1};
-        vector<int> dy = {1,0,-1,0};
+        while (!q.empty()){
+            min +=1;
 
-        while (q.size() > 0){
-            minutes +=1;
+            int s = q.size();
 
-            int size = q.size();
+            for (int p =0; p<s; p++){
+                pair <int, int> node = q.front(); q.pop();
 
-            for (int i=0; i<size; i++){
-                pair <int,int> point = q.front();
-                q.pop();
+                int x = node.first;
+                int y = node.second;
 
-                for (int j=0; j<4; j++){
-                    int x = point.first + dx[j];
-                    int y = point.second + dy[j];
+                for (int k = 0; k<4; k++){
+                    int i = x + dx[k];
+                    int j = y + dy[k];
 
-                    if ( x >=0 and y>=0 and x<rows and y<columns and grid[x][y] == -1 ){
-                        q.push({x,y});
-                        grid[x][y] = minutes;
-                        ones -=1 ;
+                    if (i>=0 && j>=0 && i<r && j<c && grid[i][j] == -1){
+                        grid[i][j] = min;
+                        ones-=1;
+                        q.push({i, j});
                     }
-                }
 
-                if (ones == 0) return grid;
+                    if (ones == 0) return grid;
+                }
             }
         }
 
         return grid;
+
+
+
     }
 };
