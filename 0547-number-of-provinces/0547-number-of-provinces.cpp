@@ -1,19 +1,17 @@
-void DFS(vector<vector<int>>& mat, int i , int j, int r , int c){
+void DFS(vector<vector<int>>& adj, vector <int>& visit, int ind){
 
-    if (i == r || j == c || i<0 || j<0 || mat[i][j] == 0) return;
+    if (visit[ind]) return;
 
-    mat[i][j] = 0;
+    visit[ind] = 1;
 
-    DFS(mat, i, j+1, r, c);
-    DFS(mat, i-1, j, r, c);
-    DFS(mat, i, j-1, r, c);
-    DFS(mat, i+1, j, r, c);
+    for (auto i : adj[ind]){
+        if (!visit[i]){
+            DFS(adj, visit, i);
+        }
+    }
 
-    DFS(mat, i-1, j-1, r, c);
-    DFS(mat, i+1, j+1, r, c);
-    DFS(mat, i-1, j+1, r, c);
-    DFS(mat, i+1, j-1, r, c);
 }
+
 
 
 class Solution {
@@ -25,19 +23,28 @@ public:
         int r  = mat.size();
         int c = mat[0].size();
 
-        for (int i=0; i<r; i++){
-            for(int j = 0; j<c; j++){
+        vector<vector<int>> adj(r);
 
-                if (mat[i][j] == 1){
-                    count += 1;
-                    DFS(mat, i, j, r , c);
+        vector<int> visit(r, 0);
+
+        for (int i=0; i<r; i++){
+            for (int j = 0; j<c; j++){
+                if (i != j && mat[i][j] == 1){
+                    adj[i].push_back(j);
+                    adj[j].push_back(i);
                 }
             }
         }
-       
 
 
 
-        return count ;
+        for (int i=0; i<visit.size(); i++){
+            if (visit[i] == 0){
+                count += 1;
+                DFS(adj,visit, i);
+            }
+        }
+
+        return count;
     }
 };
