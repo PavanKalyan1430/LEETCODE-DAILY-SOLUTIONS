@@ -1,47 +1,33 @@
 class Solution {
 public:
-    long long minimumCost(int cost1, int cost2, int costBoth, int need1, int need2) {
-
-        long long result = 0;
-        long long temp;
+    long long minimumCost(int c1, int c2, int b, int n1, int n2) {
         
-        while(need1 > 0 || need2 > 0){
+        long long result = 0;
 
-            int n1 = 0, n2 = 0, b = 0;
-            
-            if (need1 > 0){
-                n1 = cost1;  
-            }
+        if (c1 + c2 <= b)  return (1LL * c1 * n1 + 1LL* c2* n2);
 
-            if (need2 > 0){
-                n2 = cost2;
-            }
+        else if (c1 >= b && c2>= b) return (1LL * b * (max(n1, n2)));
 
-            if (need1 > 0 || need2 > 0){
-                b = costBoth;
-            }
+        else if (c1 + c2 > b){
+            int less = min(n1, n2);
+            result += (b * 1LL * less);
+            n1 -= less ; n2-= less;
+        }
 
-            if (b <= (n1 + n2)){
-                int mini;
-                if (need1 == 0) mini = need2;
-                else if (need2 == 0) mini = need1;
-                else mini = min(need1, need2);
-                
-                result += (1LL * b * mini);
-                need1-=mini; need2-=mini;
-            }
+        if (n1 > 0){
+            int mincost = min(c1, b);
+            result += (1LL * mincost * n1);
+            n1 = 0;
+        }
 
-            else{
-                result += (1LL * n1 * need1 );
-                result += (1LL * n2 * need2);
-                need1 = 0; need2= 0;
-            }
-
-           // cout<<result<<" ";
-            
+        if (n2 > 0){
+            int mincost = min(c2, b);
+            result += (1LL * mincost * n2);
+            n2 = 0;
         }
 
         return result;
-        
+
+
     }
 };
