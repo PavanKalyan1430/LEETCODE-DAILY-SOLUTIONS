@@ -13,8 +13,8 @@ public:
             int u = edges[i][0];
             int v = edges[i][1];
 
-            adjlist[u].push_back(v);
-            indegree[v]+=1;
+            adjlist[v].push_back(u);
+            indegree[u]+=1;
         }
 
         for (int i=0; i<indegree.size(); i++){
@@ -32,7 +32,6 @@ public:
             }
         }
 
-        reverse(result.begin(), result.end());
         if (result.size() != n) return {};
 
         return result ;
