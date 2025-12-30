@@ -2,16 +2,14 @@ class Solution {
 public:
     int myAtoi(string s) {
         
-        int result = 0;
+        long long  result = 0;
         int i =  0;
         int sign = 1;
-        int flag = 0;
         int digit;
         int mark = 0;
 
         while(i <s.size() and s[i] == ' ' )i++;
 
-        //cout<<i;
 
         if (s[i] == '-'){
             sign =  -1;
@@ -22,7 +20,6 @@ public:
             i++;
         }
 
-       // cout<<i<<" ";
 
         while(i < s.size()){
 
@@ -33,16 +30,13 @@ public:
             else{
                 digit = s[i] - '0';
 
-                cout<<"digit  "<<digit<<"  ";
+                //cout<<"digit  "<<digit<<"  ";
+                    result = (1LL * result * 10) + digit;
 
-                if ( (INT_MAX - digit) / 10 >= result){
-
-                    result = (result * 10) + digit;
-                    cout<<result<<endl;
-   
-                } 
-
-                else mark = 1;
+                    if (result > INT_MAX){
+                        mark = 1; break;
+                    }
+                   
             }
 
             i++;
@@ -52,7 +46,7 @@ public:
         if (mark == 1 and sign == 1) return INT_MAX;
         else if (mark == 1 and sign == -1) return INT_MIN;
 
-        return result * sign;
+        return (int)result * sign;
         
 
     }
