@@ -30,21 +30,17 @@ public:
             else{
                 digit = s[i] - '0';
 
-                //cout<<"digit  "<<digit<<"  ";
                     result = (1LL * result * 10) + digit;
 
-                    if (result > INT_MAX){
-                        mark = 1; break;
-                    }
+                    if (sign == 1 && result>= INT_MAX) return INT_MAX;
+                    else if (sign == -1 && -result <= INT_MIN) return INT_MIN;
+                             
                    
             }
 
             i++;
 
         }
-
-        if (mark == 1 and sign == 1) return INT_MAX;
-        else if (mark == 1 and sign == -1) return INT_MIN;
 
         return (int)result * sign;
         
