@@ -6,25 +6,26 @@ public:
     
 
         for (int i=0; i<s.size(); i++){
+            int z = t.size();
 
             if (s[i] == '(') t.push_back('(');
 
             else if (s[i] == ')'){
-                if (t.back() == '(') t.pop_back();
+                if (z && t.back() == '(') t.pop_back();
                 else return false;
             }
 
             if (s[i] == '{') t.push_back('{');
 
             else if (s[i] == '}'){
-                if (t.back() == '{') t.pop_back(); 
+                if (z &&t.back() == '{') t.pop_back(); 
                 else return false;
             }
 
             if (s[i] == '[') t.push_back('[') ;
 
             else if (s[i] == ']'){
-                if (t.back() == '[') t.pop_back();
+                if (z && t.back() == '[') t.pop_back();
                 else return false;
             }
 
