@@ -1,46 +1,26 @@
 class Solution {
 public:
     vector<vector<int>> threeSum(vector<int>& nums) {
-        
-
-        sort(nums.begin(), nums.end());
-
-        vector<vector<int>> result;
-
-        for (int i=0; i<nums.size()-2; i++){
-
-            if (i!= 0 and nums[i] == nums[i-1]) continue;
-
-            int left = i;
-            int mid = i+1;
+        vector<vector<int>> res;
+        sort(nums.begin(),nums.end());
+        for (int i=0; i<nums.size()-1; i++){
+            int x = nums[i];
+            int left = i+1;
             int right = nums.size()-1;
-
-            while (mid < right){
-
-                int element = nums[left] + nums[mid] + nums[right];
-
-                if (element == 0){
-                    result.push_back({nums[left], nums[mid], nums[right]});
-                    
-                    // int m = mid+1;
-                    // int r = right+1; 
-
-                    while(mid+1 < right and nums[mid] == nums[mid+1]) mid+=1;
-
-                    while(right-1 >mid and nums[right] == nums[right-1]) right-=1;
-
-                    mid+=1;
-                    right-=1;
-
-                    
+            while (left < right ){
+                if (nums[left] + nums[right] == -(x)){
+                    cout<<nums[left] <<" "<<nums[right]<<" ";
+                    res.push_back({x,nums[left],nums[right]});
+                    break;
                 }
+                else if (nums[left] + nums[right] < -(x)) left+=1;
 
-                else if (element > 0) right-=1;
-
-                else mid+=1;
+                else right-=1;
             }
-
         }
-            return result;
+            sort(res.begin(), res.end());
+            res.erase(unique(res.begin(), res.end()), res.end());
+
+        return res;
     }
 };
