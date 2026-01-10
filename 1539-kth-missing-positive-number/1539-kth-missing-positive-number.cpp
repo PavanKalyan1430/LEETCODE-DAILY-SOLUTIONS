@@ -1,25 +1,20 @@
 class Solution {
 public:
-    int findKthPositive(vector<int>& arr, int k) {
-        vector <int> res;
-        int maxi = arr[arr.size()-1];
-        int h =0;
-        for (int i=1; i<maxi and h <arr.size() ; i++){
-            if (i != arr[h]){
-                res.push_back(i);
-            }
+    int findKthPositive(vector<int>& nums, int k) {
+        
+        unordered_set <int> s(nums.begin(), nums.end());
 
-            else h+=1;
+        int n = nums.size();
+        int i, cnt = 0;
+        int maxi = *max_element(nums.begin(), nums.end());
+
+
+        for (i = 1; i<=maxi ; i++){
+            if (!s.count(i)) cnt+=1;
+
+            if (cnt == k) return i;
         }
 
-        for (int i: res) cout<<i<<" ";
-
-        if (res.size() < k){
-            return arr[arr.size()-1] + k;
-        }
-
-        else return res[k-1];
-
-       // return 0;
+        return  (i-1) + (k-cnt);
     }
 };
