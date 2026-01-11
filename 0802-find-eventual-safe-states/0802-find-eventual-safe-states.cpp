@@ -1,23 +1,22 @@
-bool DFS(vector<vector<int>>&adjlist,vector<int>&visit, vector<int>&path, vector<int>&check,
-        int node){
+bool DFS(vector<vector<int>> &adjlist , vector<int>&visit,
+    vector<int>&check , vector<int>&path , int node){
 
         visit[node] = 1;
         path[node] = 1;
 
-
         for (auto neighbour : adjlist[node]){
 
             if (!visit[neighbour]){
-                if (DFS(adjlist, visit, path, check, neighbour) == false) return false;
+                
+                if (DFS(adjlist, visit, check , path , neighbour) == false) return false;
+
             }
 
-            else if (path[neighbour] == 1) return false;
-
+            else if (visit[neighbour] == 1 && path[neighbour] == 1) return false;
         }
 
-        path[node] = 0;
-        check[node] = 1;
-
+        path[node]= 0;
+        check[node]= 1;
         return true;
 
 }
@@ -26,29 +25,27 @@ bool DFS(vector<vector<int>>&adjlist,vector<int>&visit, vector<int>&path, vector
 class Solution {
 public:
     vector<int> eventualSafeNodes(vector<vector<int>>& graph) {
-    
-        int v = graph.size();
-        int e = v;
+        
+        int n = graph.size();
 
-        vector<int>visit(v);
-        vector<int>path(v);
-        vector<int>check(v);
+        vector<int> check(n);
+        vector<int> path(n);
+        vector<int> visit(n);
 
-        bool ans;
-
-        for (int i = 0; i<v; i++){
+        for (int i=0; i<n; i++){
             if (!visit[i]){
-                ans = DFS(graph, visit, path, check, i);
+                DFS(graph, visit, check , path, i);
             }
         }
 
         vector<int> result;
 
-        for (int i = 0; i<check.size(); i++){
+        for (int i=0; i<check.size(); i++){
             if (check[i] == 1) result.push_back(i);
         }
 
         return result;
+
 
     }
 };
