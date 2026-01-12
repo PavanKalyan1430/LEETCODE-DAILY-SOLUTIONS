@@ -7,24 +7,22 @@ public:
 
         int mid;
 
-        while (left < right){
+        while ( left< right){
 
-            mid = (left + right ) / 2;
+            mid = left + (right-left) / 2;
 
-            if (nums[left] == nums[mid] && nums[mid] == nums[right]){
-                left ++;
-                right --;
+            if (nums[left] == nums[mid] and nums[mid] == nums[right]){
+                left++;
+                right--;
             }
 
-            else if (nums[ mid ] > nums[right]){
-                left = mid+1;
+            if ( nums[mid] < nums[right]){
+                right = mid-1;
             }
 
-            else right = mid;
-
+            else left = mid+1;
         }
 
         return nums[left];
-
     }
 };
