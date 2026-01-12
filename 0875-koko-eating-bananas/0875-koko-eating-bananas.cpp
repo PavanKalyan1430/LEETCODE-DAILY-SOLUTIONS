@@ -1,13 +1,14 @@
-long long can_eat(vector<int> &piles, int banana_per_hour ){
+long long hours_req(vector<int>&piles, int bananas_per_hour){
 
-    long long hours = 0;
+    long long total_hours = 0, h;
 
-    for ( int i : piles){
-         hours += ( (i + banana_per_hour -1) / banana_per_hour);
+    for (int i : piles){
+        h = (i + bananas_per_hour-1) / bananas_per_hour;
+
+        total_hours += h;
     }
 
-    return hours;
-
+    return total_hours;
 }
 
 class Solution {
@@ -16,30 +17,24 @@ public:
         
         int left = 1;
         int right = *max_element(piles.begin(), piles.end());
-        int mid;
 
-        long long hours;
-        int result = INT_MAX;
+        long long time;
+        int result ;
 
-        while ( left <= right){
+        while(left <= right){
+            int mid = left + (right - left)/ 2;
 
-            mid = ( left + right ) / 2;
+            time= hours_req(piles, mid);
 
-            hours = can_eat(piles, mid);
-
-            if ( hours <= h){
-                result = min(result , mid);
-                right = mid-1;
+            if ( time <= h ){
+                result = mid;
+                right = mid - 1;
             }
 
-            else left = mid+1;
-
-
+            else left = mid +1 ;
             
         }
 
         return result;
-
-
     }
 };
