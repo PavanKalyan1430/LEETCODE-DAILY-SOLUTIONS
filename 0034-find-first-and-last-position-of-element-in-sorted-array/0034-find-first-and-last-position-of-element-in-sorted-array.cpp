@@ -1,49 +1,52 @@
-int first_occurence (vector<int>& nums, int &target){
+int Find1st_occur(vector<int>&nums, int target){
 
     int left = 0;
     int right = nums.size()-1;
-    int mid , ans = -1;
+    int result = -1;
 
-    while(left <= right){
-         
-         mid = (left + right )/ 2;
+    while (left <= right){
+        int mid = left + (right - left ) / 2;
 
-         if (nums[mid] >= target){
-
-            if (nums[mid] == target){
-                ans  = mid;
-            }
+        if (nums[mid] == target){
+            result = mid;
             right = mid-1;
-         }
+        }
 
-         else left = mid+1;
+        else if (nums[mid] > target) right = mid-1;
+
+        else left = mid+1;
+
     }
-    return ans;
+
+    return result;
+
+    
 
 }
 
-int last_occurence (vector<int>& nums, int &target){
+int Findlast_occur(vector<int>&nums, int target){
 
     int left = 0;
     int right = nums.size()-1;
-    int mid, ans = -1;
+    int result = -1;
 
-    while(left <= right){
-         
-         mid = (left + right )/ 2;
+    while (left <= right){
+        int mid = left + (right - left ) / 2;
 
-         if (nums[mid] <= target){
-
-            if (nums[mid] == target){
-                ans  = mid;
-            }
+        if (nums[mid] == target){
+            result = mid;
             left = mid+1;
-         }
+        }
 
-         else right = mid-1;
+        else if (nums[mid] > target) right = mid-1;
+
+        else left = mid+1;
+
     }
 
-    return ans;
+    return result;
+
+    
 
 }
 
@@ -52,9 +55,13 @@ class Solution {
 public:
     vector<int> searchRange(vector<int>& nums, int target) {
         
-        int f_occur = first_occurence(nums, target);
-        int l_occur = last_occurence(nums, target);
+       
+
+        int f_occur = Find1st_occur(nums, target);
+        int l_occur = Findlast_occur(nums, target);
+
 
         return {f_occur, l_occur};
+
     }
 };
