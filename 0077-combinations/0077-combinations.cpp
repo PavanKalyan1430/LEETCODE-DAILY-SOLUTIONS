@@ -1,23 +1,26 @@
-void fun(vector<int>&nums,vector<int>&temp, vector<vector<int>>&result, int i, int n , int k){
+void fun(vector<int>&nums,vector<int>&temp, vector<vector<int>>&result, int start, int n , int k){
 
-    
 
     if (temp.size() >= k){
         result.push_back(temp);
         return;
     }
 
-    if (i >=n ) return;
+    for (int i= start; i<n; i++){
 
-    temp.push_back(nums[i]);
+        temp.push_back(nums[i]);
 
-    fun(nums, temp, result, i+1, n, k);
+        fun(nums, temp, result, i+1, n, k);
 
-    temp.pop_back();
+        temp.pop_back();
 
-    fun(nums, temp, result, i+1, n, k);
+    }
 
-    return;
+     return;
+
+
+
+
 
 }
 
