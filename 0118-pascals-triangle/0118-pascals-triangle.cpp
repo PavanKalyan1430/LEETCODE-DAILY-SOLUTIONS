@@ -2,27 +2,22 @@ class Solution {
 public:
     vector<vector<int>> generate(int n) {
         
-        vector<vector<int>> result ;
+        vector<vector<int>> result;
+        vector<int> prev ;
 
-        result.push_back({1});
-        for (int i=1; i< n; i++){
-            vector <int> temp;
-            for (int j= 0; j<=i ; j++){
+        for (int i=0; i<n; i++){
+            
+            vector<int> current(i+1, 1);
 
-                if ( j == 0 || j == i) temp.push_back(1);
-
-                else {
-                    temp.push_back( result[i-1][j-1] + result[i-1][j] );
-                }
-                
+            for (int j=1; j<i; j++){  
+                current[j] = prev[j-1] + prev[j];
             }
 
-            result.push_back(temp);
-
+            result.push_back(current);
+            prev = current;
         }
 
         return result;
-
         
     }
 };
