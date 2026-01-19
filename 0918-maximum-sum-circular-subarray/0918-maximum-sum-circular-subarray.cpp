@@ -1,43 +1,44 @@
 class Solution {
 public:
     int maxSubarraySumCircular(vector<int>& nums) {
+        
+        int total = 0;
+        total = accumulate(nums.begin(), nums.end(), 0);
 
-       
+        int max_subarray_sum = nums[0] ;
+        int max_result = nums[0];
+
+        int min_subarray_sum = nums[0];
+        int min_result = nums[0];
+
+        for (int i=1; i<nums.size(); i++){
+
+            // fiding the minimum subarray sum
+            if (min_subarray_sum > 0) min_subarray_sum = 0;
+
+            min_subarray_sum += nums[i];
+
+            min_result = min(min_result, min_subarray_sum);
 
 
-       int sumy= nums[0] , sumy_mini=  nums[0];
-       int maxi = nums[0], mini = nums[0];
+            // finding the maximum subarray sum
+            if (max_subarray_sum < 0) max_subarray_sum = 0;
 
-       int total_sum =0;
-       total_sum = accumulate(nums.begin(), nums.end(), 0);
+            max_subarray_sum += nums[i];
 
-       
-
-       for (int i=1; i<nums.size(); i++){
-
-            if (sumy < 0) sumy = 0;
-
-            sumy+= nums[i];
-            maxi = max(maxi, sumy); 
-
-            if (sumy_mini > 0) sumy_mini =0;
-            sumy_mini += nums[i];
-            mini = min(mini, sumy_mini);
-       } 
-
-        cout<<total_sum<<endl<<mini<<endl<<maxi;
-
-        if (total_sum == mini) return maxi;
-
-        if ( mini < 0){
-            return max(total_sum - mini, maxi);
+            max_result = max(max_result, max_subarray_sum);
         }
 
-        return total_sum;
+        // max_subarray_sum is negative it means it is a single element whcih       
+        //is negative and also the largest among all negative number (ex: -1 , -10, 100) :  [ans is -1]
+        if (max_result < 0){
+            return max_result;
+        }
 
-        // else return max(total_sum, maxi);
+        // now we have two options either the max_result can be 
+        //the maximum or the total - minimum subarray
 
-
-
+       return max(max_result, total- min_result);
+    
     }
 };
