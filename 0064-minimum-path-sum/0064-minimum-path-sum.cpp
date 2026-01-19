@@ -21,6 +21,6 @@ public:
             }
         }
 
-        return grid[rows - 1][cols - 1]; // Bottom-right cell
+        return grid.back().back();
     }
 };
