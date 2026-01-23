@@ -2,38 +2,33 @@ class Solution {
 public:
     vector<int> productExceptSelf(vector<int>& nums) {
         
-        int zero = 0;
-        int product = 1;
         int n = nums.size();
-        int zero_index;
+        vector<int> suffix(n, 1);
+        vector<int> prefix(n, 1);
+        vector<int> result(n)
 
-        vector<int> res(n , 0);
+        int pro = nums[0];
 
-        for (int i: nums){
-            if (i != 0) product *= i;
+        for (int i=1; i<nums.size(); i++){
+            prefix[i] = pro;
+            pro = pro * nums[i];
         }
 
-        for (int i=0; i<nums.size(); i++){
-            if (nums[i] == 0){
-                zero +=1;
-                 zero_index = i;
-            }
+        pro = nums.back();
+
+        for (int i=nums.size()-2; i>=0; i--){
+            suffix[i] = pro;
+            pro = pro * nums[i];
         }
 
-        if (zero > 1){
-            return res;
-        }
+        // for (auto i : prefix) cout<<i<<" ";
+        // cout<<endl;
 
-        else if (zero == 1) {
-            res[zero_index] = product;
-            return res;
-        }
+        // for (auto i : suffix) cout<<i<<" ";
 
-        for (int i= 0 ; i<n; i++){
-            if (nums[i] == 0) res[i] = product;
-            else res[i] = product / nums[i];
+        for (int i=0; i<result.size(); i++){
+            result[i] = suffix[i] * prefix[i];
         }
-
-        return res;
+        return result;
     }
 };
