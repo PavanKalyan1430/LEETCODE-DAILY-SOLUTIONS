@@ -2,29 +2,32 @@ class Solution {
 public:
     vector<int> topKFrequent(vector<int>& nums, int k) {
         
-        vector<vector<int>> bucket(nums.size()+1);
-        unordered_map <int , int> m;
-        vector<int> result;
+        // priority_queue<pair<int, int>, vector<pair<int, int>>> q;
+        int n = nums.size();
 
-        for (int  i : nums ) m[i]+=1;
+        vector <int> result;
+        vector<vector<int>> freq(n+1);
 
-        for (auto i : m){
-            bucket[i.second].push_back(i.first);
-        }
 
-        for (int i= bucket.size()-1 ; i>=0; i--){
-            int j = bucket[i].size()-1;
+        unordered_map <int, int> m;
 
-            while(k > 0 && j >= 0){
-                result.push_back(bucket[i][j]);
-                j--;
-                k--;
+        for (auto i : nums) m[i]++;
+
+        for (auto i : m) freq[i.second].push_back(i.first);
+
+
+        for (int i= freq.size()-1 ; i>=0 && k>0; i--){
+
+            if (freq[i].size() != 0) {
+
+                for (auto p : freq[i]) result.push_back(p);
+                k-= freq[i].size();
             }
-
-            if (k == 0) break;
-
         }
 
         return result;
+
+        
+
     }
 };
