@@ -31,17 +31,17 @@ public:
             bool have_col= false;
             bool have_row = false;
 
-            if (x > minrowX[x] && x< maxrowX[x]) have_row = true;
+            if (x > minrowX[y] && x< maxrowX[y]) have_row = true;
 
-            if (y > mincolY[y] && y < maxcolY[y]) have_col = true;
+            if (y > mincolY[x] && y < maxcolY[x]) have_col = true;
 
             if (have_row && have_col) cnt +=1;
 
         }
 
-        // for (int i: minrowX) cout<<i<<" ";
-        // cout<<endl;
-        // for (int i: maxrowX) cout<<i<<" ";
+        for (int i: minrowX) cout<<i<<" ";
+        cout<<endl;
+        for (int i: maxrowX) cout<<i<<" ";
 
         return cnt;
 
