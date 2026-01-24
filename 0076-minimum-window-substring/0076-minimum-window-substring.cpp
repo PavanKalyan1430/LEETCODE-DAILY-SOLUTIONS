@@ -2,50 +2,52 @@ class Solution {
 public:
     string minWindow(string s, string t) {
         
-        unordered_map <char , int> need, have;
+        unordered_map <char , int> need;
+        unordered_map <char , int> have;
+        
+        for (auto i : t) need[i]+=1;
 
-        int need_count = 0, have_count = 0;
-        int left = 0;
+        int have_cnt= 0;
+        int need_cnt = need.size();
 
-        int start = 0;
-        int  min_len = INT_MAX;
+        int left = 0, len, start;
+        int minlen = INT_MAX;
 
-        for (int i=0; i<t.size(); i++) need[t[i]]++;
-        need_count = need.size();
-
-
-        for (int right = 0; right<s.size(); right++){
-
-            have[s[right]]++;
+        for (int right = 0; right<s.size(); right+=1){
             
-            if ( have[s[right]] == need[s[right]]) have_count +=1;
+            char c   = s[right];
 
-      
+            if (need.count(c)) have[c]+=1;
+
+            if (need.count(c) && need[c] == have[c]) have_cnt +=1;
 
 
-            while(have_count >= need_count){
+            cout<<have_cnt<<" ";
 
-                cout<<left <<"   " << right<<endl;
+            while (have_cnt == need_cnt) {
 
-                if (right-left+1 < min_len){
+                len = right - left + 1 ;
+
+                if (len < minlen){
                     start = left;
-                    min_len = right-left+1;
+                    minlen = len;
                 }
 
-                have[s[left]]-=1;
-
-                if (need[s[left]] > have[s[left]]) have_count-=1;
-
+                char k   = s[left];
                 left+=1;
+                
+                if (need.count(k)){
+                    have[k]-=1;
 
+                    if (have[k] < need[k] ) have_cnt -=1;
+                }
+
+                if (have[k] == 0) have.erase(k);
+
+                
             }
-            
-
         }
 
-
-        return (min_len == INT_MAX) ? "" : s.substr(start, min_len);
+        return (minlen == INT_MAX) ? "" : s.substr(start, minlen);
     }
-
-
 };
