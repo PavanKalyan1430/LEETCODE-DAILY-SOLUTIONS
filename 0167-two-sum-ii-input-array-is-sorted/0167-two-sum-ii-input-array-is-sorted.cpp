@@ -1,22 +1,34 @@
 class Solution {
 public:
-    vector<int> twoSum(vector<int>& numbers, int target) {
+    vector<int> twoSum(vector<int>& nums, int target) {
         
-        int left = 0;
-        int right = numbers.size()-1;
-        while(left<right){
-           /// mid= (left+right)/2;
-            if (numbers[left]+numbers[right]==target){
-                return {left+1,right+1};
+        int n = nums.size();
+
+        // cout<<nums[1];
+
+    
+
+        for (int i=0; i<nums.size(); i++){
+
+            int comp = target - nums[i];
+
+            int left = i+1;
+            int right = n-1;  
+
+            while(left <= right){
+                int mid = (left + right)/2;
+
+                if (nums[mid] == comp) return {i+1, mid+1};
+
+                else if (nums[mid] > comp) right = mid-1;
+
+                else left = mid+1;
             }
 
-            else if (numbers[left]+numbers[right] > target){
-                right-=1;
-            }
-
-            else left+=1;
 
         }
-        return {};
+
+        return {-1,-1};
+
     }
 };
