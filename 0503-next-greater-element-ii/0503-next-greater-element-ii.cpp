@@ -3,34 +3,27 @@ public:
     vector<int> nextGreaterElements(vector<int>& nums) {
         
         stack <int> s;
-        vector<int> result;
-        vector <int> dup = nums;
-        dup.insert(dup.end(), nums.begin(), nums.end());
-
-        int sz = dup.size();
         int n = nums.size();
 
-        result.push_back(-1);
-        s.push(dup.back());
+        for (int i=0; i<n; i++) nums.push_back(nums[i]);
 
-        for (int i =sz-2 ; i>=0; i--){
+        int sz = nums.size();
+        vector<int> result(sz);
+       
+        for (int i =sz-1; i>=0; i--){
            
 
-            while(!s.empty() && s.top() <= dup[i]) s.pop();
+            while(!s.empty() && s.top() <= nums[i]) s.pop();
 
-            if (s.size() == 0) result.push_back(-1);
-            else result.push_back(s.top());
+            if (s.size() == 0) result[i] = -1;
+            else result[i] = s.top();
 
-            s.push(dup[i]);
+            s.push(nums[i]);
 
         }
 
-       reverse(result.begin(), result.end());
-
         vector<int> ans;
-
         for (int i=0; i<n; i++) ans.push_back(result[i]);
-
         return ans;
 
 
