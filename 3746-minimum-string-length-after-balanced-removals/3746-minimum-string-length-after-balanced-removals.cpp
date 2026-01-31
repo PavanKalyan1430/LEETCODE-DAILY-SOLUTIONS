@@ -2,29 +2,17 @@ class Solution {
 public:
     int minLengthAfterRemovals(string s) {
         
-        stack <char> st;
+        int cnt_a = 0;
+        int cnt_b = 0;
+
 
         for (int i=0; i<s.size(); i++){
 
-            if(st.empty()) st.push(s[i]);
-
-            else if (s[i] == 'a') {
-                if (st.top() == 'b') st.pop();
-                else st.push(s[i]);
-            }
-
-            else {
-                if (st.top() == 'a') st.pop();
-                else st.push(s[i]);
-            }
-
-            
-
-            cout<<st.size()<<" ";
-
+            if (s[i] == 'a') cnt_a +=1;
+            else cnt_b +=1;
         }
 
-        return st.size();
+        return abs( cnt_a - cnt_b);
 
     }
 };
