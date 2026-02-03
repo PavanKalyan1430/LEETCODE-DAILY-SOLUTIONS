@@ -1,60 +1,59 @@
-bool is_safe(int row, int col, vector<string>& board, int n){
+bool can_place(vector<string>&board , int row, int col , int n){
 
-    int duplicate_row = row;
-    int duplicate_col = col;
-
-    while(col>=0){
-        if (board[row][col] == 'Q') return false;
-        col--;
+    for (int i=0; i<col; i++){
+        if (board[row][i] == 'Q') return false;
     }
 
-    col = duplicate_col;
+    int dup_row = row;
+    int dup_col = col;
 
-    while(row >=0 and col>=0){
+    while(row >= 0 && col>= 0){
         if (board[row][col] == 'Q') return false;
-        row--;
-        col--;
+        row-=1;
+        col-=1;
     }
 
-    row= duplicate_row;
-    col = duplicate_col;
+    row =  dup_row ;
+    col =  dup_col ;
 
-
-    while(row < n and col>=0 ){
+    while(row <n  && col>= 0){
         if (board[row][col] == 'Q') return false;
-        row++;
-        col--;
+        row+=1;
+        col-=1;
     }
-
 
     return true;
+
 
 }
 
 
-void solve(int col, vector<vector<string>>& result, vector<string>& board, int n ){
+void solve(vector<vector<string>>& result, vector<string>board, int n , int row, int col){
 
+    
     if (col == n){
         result.push_back(board);
         return;
-    }
+    } 
 
 
-    for (int row = 0; row<n; row++){
 
-        if (is_safe(row, col, board, n)){
+    for (int i=0; i<n; i++){
+        if (board[i][col] == '.'){
+            
+            if (can_place(board , i, col, n)){
+                board[i][col] = 'Q';
 
-            board[row][col] = 'Q';
+                solve(result, board, n, row, col+1);
 
-            solve(col+1, result, board, n);
-
-            board[row][col] = '.' ;
+                board[i][col] = '.';
+            }
 
         }
-
     }
-
     return;
+    
+
 
 }
 
@@ -62,17 +61,17 @@ class Solution {
 public:
     vector<vector<string>> solveNQueens(int n) {
         
-        int col = 0;
         vector<vector<string>> result;
+
         vector<string> board(n);
-        string s = string(n,'.');
+        string s(n,'.');
+
+        //cout<<s<<" ";
 
         for (int i=0; i<n; i++) board[i] = s;
 
-        solve(col, result, board, n);
-
+        solve(result, board, n, 0, 0);
 
         return result;
-
     }
 };
