@@ -1,26 +1,30 @@
-void fun(vector<string>&result, string &temp, int i, int n, int open, int close){
+void fun(vector<string>&result, int n , int open , int close, string& temp){
 
-    if (temp.size() == 2*n){
+    if (2*n == temp.size()){
         result.push_back(temp);
         return;
     }
 
     if (open < n){
-        temp.push_back('(');
-        fun(result,  temp, i , n , open+1, close);
+        temp += '(';
+        fun(result, n, open+1, close, temp);
         temp.pop_back();
-
-
     }
 
-    if ( close< open ){
-        temp.push_back(')');
-        fun(result,  temp, i , n , open, close+1);
+     if (close < open){
+        temp += ')';
+        fun(result, n, open, close+1, temp);
         temp.pop_back();
-
     }
-        
+
     return;
+
+    
+
+
+    
+    
+
 
 }
 
@@ -28,16 +32,11 @@ class Solution {
 public:
     vector<string> generateParenthesis(int n) {
         
-
         vector<string> result;
+
+        int open = 0, close = 0;
         string temp = "";
-        int start = 0;
-
-        fun(result, temp, start, n, 0, 0);
-
-
+        fun(result ,n ,open , close, temp);
         return result;
-
-
     }
 };
