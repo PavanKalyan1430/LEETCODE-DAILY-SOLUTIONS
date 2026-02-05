@@ -1,24 +1,34 @@
+int fun(vector<int>&nums, int amount , int i, vector<vector<int>>&dp){
+
+    if (i < 0){
+        if (amount == 0) return 0;
+        else return INT_MAX-1;
+    }
+
+    if (dp[i][amount] != -1) return dp[i][amount];
+
+    if (nums[i] <= amount){
+        int pick = 1 + fun(nums ,amount-nums[i] , i, dp);
+        int notpick = fun(nums, amount, i-1, dp);
+
+        return dp[i][amount] =  min(pick , notpick);
+    }
+
+    else return dp[i][amount] = fun(nums, amount , i-1, dp);
+
+}
+
+
+
 class Solution {
 public:
     int coinChange(vector<int>& nums, int amount) {
         
         int n = nums.size();
+        vector<vector<int>> dp(n, vector<int>(amount+1, -1));
+        int ans = fun(nums,amount , n-1, dp);
 
-        vector<vector<int>> dp(n+1, vector<int>(amount+1, 0));
-
-        for (int i=1; i<=amount ; i++) dp[0][i] = INT_MAX -1;
-
-        for (int i=1; i<=n; i++){
-            for (int j = 1; j<= amount ; j++){
-
-                if (j >= nums[i-1]){
-                    dp[i][j] = min(dp[i-1][j] , 1+ dp[i][j-nums[i-1]]);
-                }
-
-                else dp[i][j] = dp[i-1][j];
-            }
-        }
-
-        return (dp.back().back() == INT_MAX-1) ? -1 : dp.back().back();
+        if (ans == INT_MAX-1) return -1;
+        else return ans;
     }
 };
