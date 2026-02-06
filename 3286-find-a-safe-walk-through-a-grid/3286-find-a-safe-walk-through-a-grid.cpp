@@ -19,7 +19,6 @@ public:
         while (!q.empty()){
             auto [h , x, y] = q.top(); q.pop();
 
-            if (x == rows-1 && y == cols-1) return true;
 
             for (int k=0; k<4; k++){
                 int nx = x + dx[k];
@@ -27,10 +26,11 @@ public:
 
                 if (nx>= rows || ny>= cols || nx<0 || ny<0) continue;
 
-                int new_health = h + grid[x][y];
+                int new_health = h + grid[nx][ny];
 
-                cout<<health<<" ";
+                //cout<<health<<" ";
                 if (new_health > health) continue;
+                if (nx == rows-1 && ny == cols-1) return true;
 
                 if (visit[nx][ny] == -1 || visit[nx][ny] > new_health){
                     visit[nx][ny] = new_health;
