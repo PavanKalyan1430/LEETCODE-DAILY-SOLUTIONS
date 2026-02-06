@@ -18,10 +18,19 @@ public:
         }
 
         //q.push({stops, distance , src})
+        // we shoulos laways come from the min stops in our path journey cause if we prioritize on the basis of mindistance3 in pq we upadtes the distance[array] and this cuurent path may be invalid in future if they were more stops in btw 
+
+        // BUT we might still have a path which takes more distance but less stops
+        //  but the algo will not allow this path  if (dist + adjdist < distance[adjnode]) 
+        // as previously we already updated the distance with minimum diatmce of that invalid path which has more stops
+
+
+        //hence we always have to prioritize the state which was given in thw question (which is the stops here)
+
         q.push({0, 0, src});
 
         while(!q.empty()){
-            auto [stops, dist,  node] = q.top(); q.pop();
+            auto [stops,dist,node] = q.top(); q.pop();
 
             if (stops == k+1) continue;
 
@@ -30,7 +39,7 @@ public:
 
                 if (dist + adjdist < distance[adjnode]){
                     distance[adjnode]= dist + adjdist;
-                    q.push({stops+1, distance[adjnode], adjnode});
+                    q.push({stops+1, distance[adjnode] ,adjnode});
                 }
             }
         }
