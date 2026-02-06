@@ -9,9 +9,7 @@ public:
 
         priority_queue<tuple<int,int,int> , vector<tuple<int,int,int>> , greater<> > q;
 
-        if (grid[0][0] == 1){
-            q.push({1, 0, 0});
-        }
+        if (grid[0][0] == 1) q.push({1,0,0});
         else q.push({0, 0, 0});
         health -=1;
 
@@ -29,12 +27,10 @@ public:
 
                 if (nx>= rows || ny>= cols || nx<0 || ny<0) continue;
 
-                int new_health = h + grid[nx][ny];
+                int new_health = h + grid[x][y];
 
-               // ..cout<<new_health<<" ";
-
+                cout<<health<<" ";
                 if (new_health > health) continue;
-
 
                 if (visit[nx][ny] == -1 || visit[nx][ny] > new_health){
                     visit[nx][ny] = new_health;
