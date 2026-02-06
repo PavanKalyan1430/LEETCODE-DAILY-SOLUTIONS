@@ -9,8 +9,16 @@ public:
 
         priority_queue<tuple<int,int,int> , vector<tuple<int,int,int>> , greater<> > q;
 
-        if (grid[0][0] == 1) q.push({1,0,0});
-        else q.push({0, 0, 0});
+        if (grid[0][0] == 1){
+            q.push({1,0,0});
+            visit[0][0] = 1;
+        }
+
+        else{
+            q.push({0, 0, 0});
+            visit[0][0] = 0;
+        }
+
         health -=1;
 
         vector<int> dx = {0,-1,0,1};
@@ -19,6 +27,10 @@ public:
         while (!q.empty()){
             auto [h , x, y] = q.top(); q.pop();
 
+             if (x == rows-1 && y == cols-1) return true;
+
+             if (visit[x][y] < h) continue;    
+        
 
             for (int k=0; k<4; k++){
                 int nx = x + dx[k];
@@ -30,7 +42,7 @@ public:
 
                 //cout<<health<<" ";
                 if (new_health > health) continue;
-                if (nx == rows-1 && ny == cols-1) return true;
+                // check after the 
 
                 if (visit[nx][ny] == -1 || visit[nx][ny] > new_health){
                     visit[nx][ny] = new_health;
