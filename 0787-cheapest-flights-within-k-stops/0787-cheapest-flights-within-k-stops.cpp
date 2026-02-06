@@ -25,25 +25,26 @@ public:
             int node  = v[2];
 
             //auto [stops , d, node] = q.top(); q.pop();
-            //if (node == dst) return distance[node];
+            //if (node == dst) return d;
             //int newstop;
+            if (stops == k+1) continue;
 
             for (auto neighbour : adjlist[node]){
                 auto [adjnode , adjdist] = neighbour;
 
-                if (stops == k+1) continue;
                 //cout<<stops << "   "<< adjnode<<endl;
 
                 if (d + adjdist < distance[adjnode]){
                     distance[adjnode] = d + adjdist;
-                    q.push({stops +1 , distance[adjnode], adjnode});
+                    q.push({ stops+1, distance[adjnode],adjnode});
                 }
             }
 
         }
 
+        //return -1;
         if (distance[dst] == INT_MAX) return -1;
-        return distance[dst];
+         return distance[dst];
 
         //return -1;
 
