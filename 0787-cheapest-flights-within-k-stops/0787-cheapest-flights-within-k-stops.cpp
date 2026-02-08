@@ -2,10 +2,13 @@ class Solution {
 public:
     int findCheapestPrice(int n, vector<vector<int>>& edges, int src, int dst, int k) {
 
+        vector<vector<int>> visit(n, vector<int>(k+2, -1));
         
         vector<vector<pair<int,int>>> adjlist(n);
-        vector<int> distance(n, INT_MAX);
+        //vector<int> distance(n, INT_MAX);
 
+    
+    
 
         priority_queue<tuple<int,int,int>, vector<tuple<int,int,int>> , greater<> > q;
 
@@ -30,22 +33,32 @@ public:
         q.push({0, 0, src});
 
         while(!q.empty()){
-            auto [stops,dist,node] = q.top(); q.pop();
+            auto [dist, stops,node] = q.top(); q.pop();
+
+            if (node == dst) return dist;
+
+            if (visit[node][stops] != -1 && visit[node][stops] < dist) continue;
+
 
             if (stops == k+1) continue;
 
             for (auto neighbour : adjlist[node]){
                 auto [adjnode, adjdist] = neighbour;
 
-                if (dist + adjdist < distance[adjnode]){
-                    distance[adjnode]= dist + adjdist;
-                    q.push({stops+1, distance[adjnode] ,adjnode});
+                int new_dist = dist + adjdist;
+                int new_stops = stops+1;
+
+                if (visit[adjnode][new_stops] == -1 || visit[adjnode][new_stops] > new_dist){
+                    visit[adjnode][new_stops]= new_dist;
+                    q.push({new_dist, new_stops ,adjnode});
                 }
             }
         }
 
-        if (distance[dst] == INT_MAX) return -1;
-        else return distance[dst];
+        return -1;
+
+        // if (distance[dst] == INT_MAX) return -1;
+        // else return distance[dst];
 
     }
 };
