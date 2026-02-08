@@ -10,28 +10,34 @@
  * };
  */
 
-int fun(TreeNode* root, bool &flag){
-
-    if (flag == false) return 0;
+ int HelperFunction(TreeNode* root, bool &check){
     if (!root) return 0;
 
-    int left =  fun(root->left, flag);
-    int right = fun(root->right, flag);
+    int left =  HelperFunction( root->left, check);
+    int right = HelperFunction(root->right, check);
 
-    if (abs (left - right) > 1) flag = false;
+    if (abs(left - right) > 1) check = false;;
 
-    return 1 + max(left , right);
-
-
-}
-
+    return max(left, right) + 1;
+ }
 class Solution {
 public:
     bool isBalanced(TreeNode* root) {
+
+        bool check = true;
         
-        bool flag = true;
-        fun(root, flag);
-        return flag;
+        if (!root) return true;
+
+        HelperFunction( root, check);
+        
+        return check;
+
+
+        // if (root->left and  root->right) return true;
+
+        // if (root->left or root->right) return false;
+
+
 
     }
 };
