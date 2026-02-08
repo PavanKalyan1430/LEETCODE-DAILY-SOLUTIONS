@@ -1,43 +1,30 @@
-/**
- * Definition for a binary tree node.
- * struct TreeNode {
- *     int val;
- *     TreeNode *left;
- *     TreeNode *right;
- *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
- *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
- *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
- * };
- */
 
- int HelperFunction(TreeNode* root, bool &check){
+
+int fun(TreeNode* root){
+
     if (!root) return 0;
 
-    int left =  HelperFunction( root->left, check);
-    int right = HelperFunction(root->right, check);
+    int left =  fun(root->left);
+   
+    int right = fun(root->right);
+    if (left == -1 || right == -1) return -1;
 
-    if (abs(left - right) > 1) check = false;;
+    if (abs(left - right) > 1) return -1;
 
-    return max(left, right) + 1;
- }
+    return 1 + max(left , right);
+
+
+}
+
 class Solution {
 public:
     bool isBalanced(TreeNode* root) {
-
-        bool check = true;
         
-        if (!root) return true;
-
-        HelperFunction( root, check);
-        
-        return check;
-
-
-        // if (root->left and  root->right) return true;
-
-        // if (root->left or root->right) return false;
-
-
-
+       
+    if (fun(root) == -1) return false;
+    else return true;
     }
+        //return flag;
+
+    
 };
