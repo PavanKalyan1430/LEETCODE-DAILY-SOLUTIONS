@@ -9,7 +9,10 @@ public:
         vector<vector<int>> dp(rows, vector<int>(cols, -1));
 
         // queue stores: x, y, walls_removed, distance
-        queue<vector<int>> q;
+
+        queue<tuple<int,int,int,int>> q;
+
+        //queue<vector<int>> q;
         q.push({0, 0, 0, 0});
 
         dp[0][0] = 0;
@@ -18,17 +21,13 @@ public:
         vector<int> dy = {1, 0, -1, 0};
 
         while (!q.empty()) {
-            auto cur = q.front();
+            auto [dist, x,y,walls_removed] = q.front();
             q.pop();
 
-            int x = cur[0];
-            int y = cur[1];
-            int walls_removed = cur[2];
-            int dist = cur[3];
-
-            // destination reached
             if (x == rows - 1 && y == cols - 1)
                 return dist;
+
+                if (dp[x][y] < walls_removed) continue;
 
             for (int d = 0; d < 4; d++) {
                 int nx = x + dx[d];
@@ -49,7 +48,7 @@ public:
                     continue;
 
                 dp[nx][ny] = new_walls;
-                q.push({nx, ny, new_walls, dist + 1});
+                q.push({dist+1, nx, ny, new_walls});
             }
         }
 
