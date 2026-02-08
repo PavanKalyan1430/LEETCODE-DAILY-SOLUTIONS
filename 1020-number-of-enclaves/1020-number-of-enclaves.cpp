@@ -1,9 +1,9 @@
 void DFS(vector<vector<int>>& grid, vector<vector<int>>&visit,int i, int j, int r, int c){
     
     
-    if (i == r || j == c || i<0 || j<0 || visit[i][j] || grid[i][j] == 0) return;
+    if (i == r || j == c || i<0 || j<0  || grid[i][j] == 0) return;
 
-    visit[i][j] = 1;
+    //visit[i][j] = 1;
     grid[i][j] = 0;
 
     DFS(grid, visit, i,j+1, r, c);
