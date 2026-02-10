@@ -1,22 +1,27 @@
+char fun(string &word, int k){
+
+    if (word.size() >= k){
+        return word[k-1];
+    }
+
+    string w = "";
+    int sz = word.size();
+
+    for (int i=0; i<sz; i++){
+        w += (word[i] + 1);
+    }
+    word += w;
+
+    return fun(word, k);
+}
+
+
 class Solution {
 public:
     char kthCharacter(int k) {
         
         string word = "a";
 
-        while(word.size() < k){
-            string w = "";
-            for (int i=0; i<word.size(); i++){
-                w += (word[i] + 1);
-            }
-
-            word += w;
-
-        }
-
-        //cout<< word;
-
-        return word[k-1];
-
+        return fun(word, k);
     }
 };
