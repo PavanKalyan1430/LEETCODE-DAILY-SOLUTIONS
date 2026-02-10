@@ -2,30 +2,33 @@ class Solution {
 public:
     bool checkValidString(string s) {
         
-        int open = 0, close = 0;
-        int flag = 0;
+        int min_open = 0;
 
-        for (int i=0;i <s.size(); i++){
+        int max_open = 0;
+        
 
-            if (s[i] == '(') open +=1;
-            else if (s[i] == ')') close +=1;
-            else flag = 1;
+        for (int i=0; i<s.size(); i++){
 
-            if (open < close){
-                if (!flag)  return false;
-                else{
-                    flag = 0;
-                    open+=1;}
-            } 
+            if (s[i] == '('){
+                min_open +=1;
+                max_open+=1;
+                continue;
+            }
+
+            else if (s[i] == '*'){
+                max_open +=1;
+            }
+
+            else {
+                max_open -=1;
+            }
+
+            if (min_open > 0)min_open -=1;
+
+            if (max_open < 0) return false;
 
         }
-        
-        if (open == close) return true;
 
-        if (open + flag == close)return true;
-        else if (abs(open - flag) == close) return true;
-
-        return false;
-
+        return min_open == 0;
     }
 };
