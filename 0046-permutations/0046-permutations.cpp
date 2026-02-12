@@ -1,6 +1,6 @@
 void fun(vector<int>&nums, vector<vector<int>>&result, int idx){
 
-    if (idx == nums.size()-1) result.push_back(nums);
+    if (idx == nums.size()) result.push_back(nums);
 
 
     for (int i = idx; i<nums.size(); i++){
