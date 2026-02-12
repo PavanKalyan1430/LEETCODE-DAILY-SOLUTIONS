@@ -1,43 +1,32 @@
-
-
-
 class Solution {
 public:
     int longestBalanced(string s) {
         
         int result = 0;
-        int flag;
 
+        for (int i=0; i<s.size(); i++){
+            vector<int> freq (26, 0);
 
-        for (int i =0; i<s.size(); i++){
-        unordered_map <char , int> m;
+            for (int j = i; j<s.size(); j++){
+                int c = s[j]-'a';
+                freq[c]+=1;
+                bool flag = true;
 
-            for (int j =i; j<s.size(); j++){
-
-                flag = 1;
-
-                m[s[j]]++;
-
-                int cnt = m[s[j]];
-
-                for (auto k : m){
-                    if (k.second != cnt){
-                        flag = 0;
-                        break;}
+                for (int k =0; k<26; k++){
+                    
+                    if (freq[k] && freq[k] != freq[s[i]-'a']){
+                        flag = false;
+                        break;
+                    }
                 }
 
-                if (flag){
-                    result = max(result , j-i+1);
-                }
-
-
+                if (flag) result = max(result, j-i+1);
             }
 
-
+                
         }
 
         return result;
-
-
+        
     }
 };
