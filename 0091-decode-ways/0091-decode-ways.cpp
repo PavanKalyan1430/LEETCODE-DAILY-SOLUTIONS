@@ -1,30 +1,51 @@
-int decode(string &s , int i, vector<int>&dp){
-
-    if (i >= s.size()-1 && s[i] != '0') return 1;
-
-    if (dp[i] != -1) return dp[i];
-    int ans = 0;
-
-
-    if (s[i] != '0' ) ans += decode(s,i+1, dp);
-
-    string combine = s.substr(i,2);
-
-    if (combine >="10" && combine <= "26"){
-        ans += decode(s,i+2, dp);
-
-
-    }
-    return dp[i] = ans;
-
-}
 
 
 class Solution {
 public:
+    int result = 0;
+    vector<int> dp;
+
+
+    int fun(string&s , int idx){
+
+        if (idx == s.size()){
+            return 1;
+        }
+
+        if (dp[idx] != -1){
+            return dp[idx];
+        }
+
+        int ways = 0;
+
+        for (int i = idx ; i<s.size() && i<idx+2 ; i++){
+            string t = s.substr(idx , i-idx+1);
+
+            if (i== idx && t[0] == '0') break;
+            if ( stoi(t) > 26 ) break;
+            
+            int sz = t.size();
+            ways += fun(s, i+1);
+            t.resize(sz);
+
+
+
+        }
+
+        return dp[idx] = ways;
+
+    }
+
     int numDecodings(string s) {
         
-        vector<int> dp(s.size(), -1);
-        return decode(s, 0, dp);
+        
+
+        int idx = 0;
+
+        dp = vector<int>(s.size(),-1 );
+
+        return fun(s, idx);
+
+        //return result;
     }
 };
