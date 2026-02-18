@@ -2,11 +2,13 @@ class Solution {
 public:
     vector<string> result;
     unordered_set <string> m;
-
+    vector<int> dp;
   
     bool fun (string& s , int idx){
 
         if (idx == s.size()) return true;
+
+        if (dp[idx] == false) return false;
 
 
         for (int i= idx ; i<s.size(); i++){
@@ -14,12 +16,12 @@ public:
             string t = s.substr(idx , i-idx+1);
 
             if (m.count(t)){
-                if (fun(s, i+1)) return true;;
+                if (fun(s, i+1)) return dp[idx] = true;
             }
 
         }
 
-        return false;
+        return dp[idx] = false;
     }
           
 
@@ -31,7 +33,9 @@ public:
         int idx = 0;
         for (auto i : words)m.insert(i);
 
-        for (int i=0; i<words.size(); i++){
+        for (int i=1; i<words.size(); i++){
+
+            dp = vector<int>(words[i].size(), -1);
 
             m.erase(words[i]);
 
