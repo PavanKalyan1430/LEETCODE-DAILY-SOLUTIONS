@@ -1,38 +1,30 @@
-bool fun(vector<int>&nums,  int sum , int i, vector<vector<int>>&dp){
-
-    if (sum == 0) return true;
-
-    if (i < 0) return false;
-
-    if (dp[i][sum] != -1) return dp[i][sum];
-
-    if (nums[i] <= sum){
-        int pick = fun(nums,  sum - nums[i], i-1, dp);
-        int notpick = fun(nums ,  sum  , i-1, dp);
-
-        return dp[i][sum] = pick || notpick;
-    }
-
-    else return dp[i][sum] =  fun(nums,  sum , i-1, dp);
-}
-
 class Solution {
 public:
     bool canPartition(vector<int>& nums) {
-        
+         int n = nums.size();
 
-        int total = 0;
-        for (int i : nums) total +=i;
+         int total =accumulate(nums.begin(), nums.end(), 0);
+         if (total % 2 != 0) return false;
 
-        if (total % 2 != 0) return false;
-
-        int sum = total/2;
-
-        vector<vector<int>> dp(nums.size(), vector<int>(sum+1, -1));
-
-
-        return fun(nums, sum , nums.size()-1, dp);
-
-        
+         int sum = total/2;
+       
+       vector<vector<bool>> dp(n+1, vector<bool>(sum+1,false));
+       
+       for(int i=0; i<=n; i++){
+           dp[i][0] = true;
+       }
+       
+       
+       for (int i=1; i<=n; i++){
+           for (int j = 1; j<=sum ; j++){
+               if (j >= nums[i-1]){
+                   dp[i][j] = dp[i-1][j] || dp[i-1][j-nums[i-1]];
+               }
+               
+               else dp[i][j] = dp[i-1][j];
+           }
+       }
+       
+       return dp[n][sum];
     }
 };
