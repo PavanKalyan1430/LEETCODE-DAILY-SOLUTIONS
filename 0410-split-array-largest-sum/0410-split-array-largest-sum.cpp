@@ -1,51 +1,45 @@
-
-
-
-
 class Solution {
 public:
 
-    
+    vector<int> prefix;
 
-    int fun (vector<int>& nums ,  int k , int idx, vector<vector<int>> &dp){
+    int fun (vector<int>& nums , int k ,int idx, vector<vector<int>> &dp){
 
-    if (idx == nums.size()) return 0;    
-    
-    if (k == 1){
-        int s = 0;
-        for (int  p = idx ; p<nums.size(); p++){
-            s += nums[p];
+        int n = nums.size();
+
+        if (k == 1)
+            return prefix[n] - prefix[idx];
+
+        if (dp[idx][k] != -1)
+            return dp[idx][k];
+
+        int ans = INT_MAX;
+        int curr = 0;
+
+        for (int i = idx ; i<= n-k ; i++){
+
+            curr += nums[i];
+
+            int next = fun(nums, k-1, i+1, dp);
+
+            if (next != INT_MAX)
+                ans = min(ans , max(curr , next));
         }
-        return s;
+
+        return dp[idx][k] = ans;
     }
-
-
-    if (dp[idx][k] != -1) return dp[idx][k];
-        
-
-    int ans = INT_MAX;
-    int curr= 0;
-
-    for (int i = idx ; i<nums.size(); i++){
-        curr += nums[i];
-        ans = min(ans,  max(curr , fun(nums, k-1, i+1, dp)));
-    }
-
-    return  dp[idx][k] = ans;
-
-}
-
 
     int splitArray(vector<int>& nums, int k) {
-        
-        
-        int curr = 0;
-        vector<vector<int>> dp(nums.size(), vector<int>(k+1, -1));
-        int  rem = accumulate(nums.begin(), nums.end(), 0);
-        int idx = 0;
 
+        int n = nums.size();
 
-        return fun(nums, k, idx, dp);
+        vector<vector<int>> dp(n,vector<int>(k+1, -1));
 
+        prefix = vector<int>(n+1 , 0);
+
+        for (int i=1; i<=n; i++)
+            prefix[i] = prefix[i-1] + nums[i-1];
+
+        return fun(nums, k, 0, dp);
     }
 };
