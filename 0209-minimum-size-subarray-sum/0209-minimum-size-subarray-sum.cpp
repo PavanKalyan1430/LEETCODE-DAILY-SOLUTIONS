@@ -7,13 +7,22 @@ public:
         int minlen = INT_MAX;
 
         for (int right = 0; right<nums.size(); right++){
+
+
             sum += nums[right];
 
-            while(sum >= target){  
-                minlen = min(minlen , right-left+1);
+            while(sum >= target){
+
+               // if (sum == target){
+                    minlen = min(minlen , right-left+1);
+               // }
+
                 sum -= nums[left];
                 left +=1;
 
+                 if (sum == target){
+                    minlen = min(minlen , right-left+1);
+                }
             }
         }
 
