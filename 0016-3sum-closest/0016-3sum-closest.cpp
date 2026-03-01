@@ -2,45 +2,40 @@ class Solution {
 public:
     int threeSumClosest(vector<int>& nums, int target) {
         
-        int result = -1;
-        int mindiff = INT_MAX;
         int n = nums.size();
+        int mindiff  = INT_MAX, ans; 
 
         sort(nums.begin(), nums.end());
 
+        for (int i=0 ; i<nums.size(); i++){
 
-        for (int i=0; i<n-2; i++){
-
-            if (i != 0 && nums[i] == nums[i-1]) continue;
+            if (i!=0 && nums[i] == nums[i-1]) continue;
 
             int left = i;
-            int mid = i+1;
+            int mid =  i+1;
             int right = n-1;
 
             while (mid < right){
                 int sum = nums[left] + nums[mid] + nums[right];
-
                 int diff = abs (target - sum);
 
-                if (sum == target) return 0 ;
-
                 if (diff < mindiff){
-                    result = sum;
                     mindiff = diff;
+                   // cout<<nums[left] << "  "<<nums[mid]<< "   "<<nums[right]<<endl;
+                    ans = sum;
                 }
 
-                else if (sum > target){
-                    //result = min(result , sum-target);
-                    right-=1;
-                }
+                if (sum == target) return target;
 
-                else{
-                    //result  = min(result , target- sum);
-                    mid +=1;
-                }
+                else if (sum < target) mid+=1;
+
+                else right-=1;
+                
             }
+
+            
         }
 
-        return result;
+        return ans;
     }
 };
