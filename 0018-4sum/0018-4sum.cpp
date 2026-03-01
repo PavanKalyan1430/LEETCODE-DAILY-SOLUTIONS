@@ -4,6 +4,10 @@ public:
 
         sort(nums.begin(), nums.end());
 
+        for (auto i : nums) cout<<i<<" ";
+
+        cout<<endl;
+
         vector<vector<int>> result;
 
         int n = nums.size();
@@ -15,6 +19,8 @@ public:
             int ele = nums[i];
             int j = i+1;
 
+            //cout<<"check";
+
             for (; j<n-2; j++){
 
                 if ( j != i+1 && nums[j] == nums[j-1]) continue;
@@ -24,7 +30,7 @@ public:
                 int right = n-1;
 
                 while(mid < right){
-                    long long sum =  (0LL + ele + nums[left] + nums[mid] + nums[right]);
+                    int sum = ele + nums[left] + nums[mid] + nums[right];
 
 
                    // cout<< mid <<"   "<<right<<"    "<<sum <<"    "<<target<<endl;
