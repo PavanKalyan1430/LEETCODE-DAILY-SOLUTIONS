@@ -1,35 +1,27 @@
 class Solution {
 public:
     void sortColors(vector<int>& nums) {
-
-
-        // low should be at the end of 0
-
-        // mid should be at the start of 2;
-
-        // high should be at the end of 1
-
-        int low = 0;
+        
+        int left = 0;
         int mid = 0;
-        int high = nums.size()-1;
+        int right = nums.size()-1;
 
-        while(mid <= high){
+
+        while (mid <= right){
             if (nums[mid] == 2){
-                swap(nums[mid],nums[high]);
-                high--;
+                swap(nums[mid], nums[right]);
+                right-=1;
             }
 
             else if (nums[mid] == 0){
-                swap(nums[low], nums[mid]);
-                    low++;
-                    mid++;
-
-                
+                swap(nums[left], nums[mid]);
+                left+=1; mid+=1;
             }
-            else mid++;
+
+            else mid+=1;
         }
 
 
-        
+
     }
 };
