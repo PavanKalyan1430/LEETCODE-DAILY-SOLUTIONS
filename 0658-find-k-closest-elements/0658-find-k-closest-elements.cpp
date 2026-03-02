@@ -2,44 +2,26 @@ class Solution {
 public:
     vector<int> findClosestElements(vector<int>& nums, int k, int x) {
 
-        int pos = lower_bound(nums.begin(), nums.end(), x) - nums.begin();
-        int left ;
-        int right;
-
-        if (pos < nums.size() && nums[pos] == x){
-            left = pos;
-            right = pos+1;
-        }
-
-        else{
-            left =  pos - 1;
-            right = pos;
-        }
-
-        vector<int> result;
         int n = nums.size();
 
+        int right = lower_bound(nums.begin(), nums.end(), x) - nums.begin();
+        int left = right - 1;
 
+        deque<int> result;
 
-        while (k-- > 0){
+        while (k-- > 0) {
 
-            int a = INT_MAX , b= INT_MAX;
+            int a = (left >= 0) ? abs(nums[left] - x) : INT_MAX;
+            int b = (right < n) ? abs(nums[right] - x) : INT_MAX;
 
-            if (left >= 0) a = abs(nums[left] - x);
-            if (right < n) b = abs(nums[right] - x);
-
-            if (a <= b){
-                result.push_back(nums[left]);
-                left-=1;
+            if (a <= b) {
+                result.push_front(nums[left--]);
             }
-
-            else{
+            else {
                 result.push_back(nums[right++]);
             }
-
         }
-        sort(result.begin(), result.end());
-        return result;
 
+        return vector<int>(result.begin(), result.end());
     }
 };
