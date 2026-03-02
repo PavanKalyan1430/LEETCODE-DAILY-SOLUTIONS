@@ -15,7 +15,6 @@ public:
             left =  pos - 1;
             right = pos;
         }
-        //cout<<nums[left] <<"   "<<nums[right]<<endl;
 
         vector<int> result;
         int n = nums.size();
@@ -35,7 +34,6 @@ public:
             }
 
             else{
-                cout<<nums[right]<<" ";
                 result.push_back(nums[right++]);
             }
 
