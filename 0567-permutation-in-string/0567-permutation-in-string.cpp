@@ -1,32 +1,41 @@
 class Solution {
 public:
     bool checkInclusion(string s1, string s2) {
-        
-        vector <int> need(26, 0);
-        vector<int> have(26, 0);
 
-        for (char i : s1){
-            need[i-'a']+=1;
-        }
+        unordered_map <char,int> need, have;
 
+        for (int i=0; i<s1.size(); i++) need[s1[i]]+=1;
+
+        int need_cnt = need.size();
+        int have_cnt = 0;
         int left = 0;
+
 
         for (int right = 0; right<s2.size(); right++){
 
-            have[s2[right] - 'a']+=1;
+            char c  = s2[right];
 
-            if (right- left +1 == s1.size()){
+            if (need.count(c)) have[c]+=1;
 
-                if (have == need) return true;
+            if (need.count(c) && need[c] == have[c]) have_cnt +=1;
 
-                else {
-                    have[s2[left] - 'a']-=1;
-                    left+=1;
+           
+            if (have_cnt == need_cnt) return true;
+
+            if ( right-left+1 == s1.size()){
+
+                char k = s2[left];
+
+                if (need.count(k)){
+                    if (need[k] == have[k]) have_cnt-=1;
+                    
+                    have[k]-=1;
+
+                    if (have[k] == 0) have.erase(k);
+
                 }
-
+                left+=1;
             }
-
-
         }
 
         return false;
