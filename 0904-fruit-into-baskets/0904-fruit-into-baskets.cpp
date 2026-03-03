@@ -1,34 +1,24 @@
 class Solution {
 public:
     int totalFruit(vector<int>& nums) {
-        
         unordered_map <int,int> m;
-        int left = 0;
-        int count = 0;
-        int result = 0;
 
-        for (int right = 0; right<nums.size(); right++){
+        int left = 0, maxi = 0;
 
-            m[nums[right]]++;
-            count++;
+        for (int right =0; right<nums.size(); right++){
+            
+            m[nums[right]]+=1;
 
-            while(m.size() >= 3){
-
-                m[nums[left]]--;
+             if (m.size() > 2){
+                m[nums[left]]-=1;
 
                 if (m[nums[left]] == 0) m.erase(nums[left]);
+                left+=1;
+             }
 
-                left++;
-                count--;
-            }
-
-            
-            result = max(count, result);
-
+             maxi = max(maxi , right-left+1);
         }
 
-        return result;
-
-
+        return maxi;
     }
 };
