@@ -7,9 +7,10 @@ public:
         for (int right = 1; right<nums.size(); right++){
             if (nums[right] != nums[right-1]){
                 nums[left] = nums[right];
-                left++; 
+                left +=1;
             }
         }
+
         return left;
     }
 };
