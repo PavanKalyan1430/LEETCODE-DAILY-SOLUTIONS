@@ -2,21 +2,27 @@ class Solution {
 public:
     vector<int> maxSlidingWindow(vector<int>& nums, int k) {
         
-        deque<int> dq;
         vector<int> result;
 
+        deque<int> dq;
 
-        for (int i=0 ; i<nums.size(); i++){
+        int i =0;
 
-            while(!dq.empty() && nums[dq.back()] <= nums[i]) dq.pop_back();
-            dq.push_back(i);
+        for (int right = 0; right<nums.size(); right++){
 
-            if (!dq.empty() && i-k >= dq.front()) dq.pop_front();
-            cout<<dq.front();
+            while (!dq.empty() && nums[dq.back()] <= nums[right]) dq.pop_back();
 
-            if (!dq.empty() && i+1 >=k) result.push_back(nums[dq.front()]);
+            dq.push_back(right);
+
+            if (right-k >= dq.front()) dq.pop_front();
+            
+            if (right >= k-1) result.push_back(nums[dq.front()]);
+
         }
 
         return result;
+
+
+
     }
 };
