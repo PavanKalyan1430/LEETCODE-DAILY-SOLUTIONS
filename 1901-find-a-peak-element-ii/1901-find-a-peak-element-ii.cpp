@@ -36,10 +36,10 @@ public:
 
 
             cout<<mid<<endl;
-            cout<<ll<<"   "<<rr<<endl;
+           // cout<<ll<<"   "<<rr<<endl;
 
             if ( mat[r][c] > ll && mat[r][c] > rr ) return {r,c};
-            else if (mat[r][c] < mat[r][rr]) left = mid+1;
+            else if (mat[r][c] < rr) left = mid+1;
             else right = mid-1; 
             
         }
