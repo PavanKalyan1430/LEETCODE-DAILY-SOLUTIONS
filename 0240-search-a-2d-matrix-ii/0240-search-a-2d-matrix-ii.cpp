@@ -5,24 +5,19 @@ public:
         int rows = matrix.size();
         int cols = matrix[0].size();
 
-        int r = 0;
-        int c  = cols-1;
+        int i = 0;
+        int j = cols-1;
 
-        while ( r < rows && c >= 0){
+        while (i < rows && j>= 0){
 
-            if (matrix[r][c] == target) return true;
+            if (matrix[i][j] == target) return true;
 
-            else if (matrix[r][c] > target) c -=1;
+            else if (matrix[i][j] < target) i+=1;
 
-            else r +=1;
+            else j-=1;
 
         }
 
         return false;
-
-
-
-
-
     }
 };
