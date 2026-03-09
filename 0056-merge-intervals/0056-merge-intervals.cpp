@@ -4,7 +4,6 @@ public:
 
         sort(nums.begin(), nums.end());
 
-
         vector<vector<int>> result;
         result.push_back(nums[0]);
 
