@@ -1,23 +1,21 @@
-bool can_bloom(vector<int>&nums, int m , int k , int day){
-    
+bool can_place(vector<int>&nums, int m , int k , int day){
+
+    int d = 0;
     int boque = 0;
-    int cnt = 0;
 
-    for (int i : nums){
-        if ( i <= day ){
-            cnt +=1;
+    for (int i=0; i<nums.size(); i++){
 
-            if (cnt == k){
-                boque +=1;
-                cnt=0;
+        if (nums[i] <= day){
+            d+=1;
+            
+            if (d == k){
+                boque+=1;
+                d=0;
             }
         }
 
-        else cnt = 0;
+        else d = 0;
     }
-
-    //cout<<day << "   "<<boque<<endl;
-    
 
     return boque >= m;
 }
@@ -28,24 +26,24 @@ public:
     int minDays(vector<int>& nums, int m, int k) {
         
         int n = nums.size();
-        if (1LL *  m * k > n) return -1;
+        int result = -1;
 
-        int left =  1;
+        if (n < 1LL*m*k) return -1;
+
+        int left = *min_element(nums.begin(), nums.end());
         int right = *max_element(nums.begin(), nums.end());
 
-        int ans = -1;
+        while (left <= right){
+            int mid = (left+right)/2;
 
-        while(left <= right){
-            int mid = left  + (right-left)/2;
-
-            if (can_bloom(nums, m, k, mid) ){
-                ans = mid;
-                right = mid-1;           
+            if (can_place(nums, m, k, mid)){
+                result = mid;
+                right = mid-1;
             }
-
-            else left = mid +1;
+            else left = mid+1;
         }
 
-        return ans;
+        return result;
+        
     }
 };
