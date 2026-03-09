@@ -1,52 +1,45 @@
 class Solution {
 public:
-    bool canFinish(int V, vector<vector<int>>& edges) {
+    bool canFinish(int n, vector<vector<int>>& edges) {
         
-        vector<vector<int>> adj(V);
-        for (auto edge : edges) {
-            int u = edge[0];
-            int v = edge[1];
-            adj[u].push_back(v);
-        }
+        int e = edges.size();
 
-        vector<int> inDegree(V, 0);
-        for (int u = 0; u < V; u++) {
-            for (int v : adj[u]) {
-                inDegree[v]++;
-            }
-        }
+        vector<vector<int>> adjlist(n);
+        vector<int> result;
+        vector<int> indegree(n);
 
         queue<int> q;
-        for (int i = 0; i < V; i++) {
-            if (inDegree[i] == 0) {
-                q.push(i);
+
+        for (int i=0; i<e; i++){
+            int u = edges[i][1];
+            int v = edges[i][0];
+
+            adjlist[v].push_back(u);
+            indegree[u]+=1;
+        }
+
+        for (int i=0; i<indegree.size(); i++){
+            if (indegree[i] == 0) q.push(i);
+        }
+
+        while(!q.empty()){
+            int node = q.front();  q.pop();
+            result.push_back(node);
+
+            for (auto neighbour : adjlist[node]){
+                indegree[neighbour]-=1;
+
+                if (indegree[neighbour] == 0) q.push(neighbour);
             }
         }
 
-        vector<int> topo;
-        while (!q.empty()) {
-            int node = q.front();
-            q.pop();
-            topo.push_back(node);
+        return result.size() == n;
 
-            for (int neighbor : adj[node]) {
-                inDegree[neighbor]--;
-                if (inDegree[neighbor] == 0) {
-                    q.push(neighbor);
-                }
-            }
-        }
 
-       
-        
 
-        return topo.size() == V;
+
+
+
+
     }
 };
-
-
-
-
-
-
-  
