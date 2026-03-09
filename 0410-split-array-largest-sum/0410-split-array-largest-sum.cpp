@@ -1,45 +1,44 @@
-class Solution {
-public:
+bool can_split(vector<int>&nums, int k, int sum){
 
-    vector<int> prefix;
+    int splits = 0;
+    int split_sum = 0;
 
-    int fun (vector<int>& nums , int k ,int idx, vector<vector<int>> &dp){
-
-        int n = nums.size();
-
-        if (k == 1)
-            return prefix[n] - prefix[idx];
-
-        if (dp[idx][k] != -1)
-            return dp[idx][k];
-
-        int ans = INT_MAX;
-        int curr = 0;
-
-        for (int i = idx ; i<= n-k ; i++){
-
-            curr += nums[i];
-
-            int next = fun(nums, k-1, i+1, dp);
-
-            if (next != INT_MAX)
-                ans = min(ans , max(curr , next));
+    for (int i : nums){
+        if (split_sum + i > sum){
+            splits +=1;
+            split_sum = i;
         }
-
-        return dp[idx][k] = ans;
+        else split_sum +=i;
     }
 
+    if (split_sum > 0) splits+=1;
+
+    return splits <= k;
+
+}
+
+
+class Solution {
+public:
     int splitArray(vector<int>& nums, int k) {
 
-        int n = nums.size();
+       int left = *max_element(nums.begin(), nums.end());
+       int right = accumulate(nums.begin(), nums.end(), 0);
+       int result = -1;
 
-        vector<vector<int>> dp(n,vector<int>(k+1, -1));
+       while (left<= right){
 
-        prefix = vector<int>(n+1 , 0);
+            int mid =  (left + right ) / 2;
 
-        for (int i=1; i<=n; i++)
-            prefix[i] = prefix[i-1] + nums[i-1];
+            if (can_split(nums, k, mid)){
+                result = mid;
+                right = mid-1;
+            }
+            else left = mid+1;
 
-        return fun(nums, k, 0, dp);
+       }
+
+       return result;
+
     }
 };
