@@ -1,30 +1,23 @@
+int dfs(TreeNode* root, bool& check){
+        if (!root) return 0;
 
+        int left = dfs(root->left, check);
+        int right = dfs(root->right, check);
 
-int fun(TreeNode* root){
+        if (abs (left - right) > 1) check = false;
 
-    if (!root) return 0;
-
-    int left =  fun(root->left);
-   
-    int right = fun(root->right);
-    if (left == -1 || right == -1) return -1;
-
-    if (abs(left - right) > 1) return -1;
-
-    return 1 + max(left , right);
-
-
+        return max(left, right) + 1;
 }
+
 
 class Solution {
 public:
     bool isBalanced(TreeNode* root) {
         
-       
-    if (fun(root) == -1) return false;
-    else return true;
-    }
-        //return flag;
+        bool check = true;
+        
+        dfs(root, check);
 
-    
+        return check;
+    }
 };
