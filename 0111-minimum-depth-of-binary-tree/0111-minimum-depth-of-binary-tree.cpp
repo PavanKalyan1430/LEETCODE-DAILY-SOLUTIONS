@@ -1,32 +1,29 @@
-int DFS( TreeNode* root, int &min_height, int temp_height){
+void dfs(TreeNode* root, int temp, int &min_h){
 
-    if ( root == NULL) return 0;
+    if (!root) return ;
 
-    else if ( !root->left  &&  !root->right){
-        min_height = min(min_height, temp_height);
+    temp+=1;
+    if (!root->left && !root->right){
+        min_h = min(min_h, temp);
     }
 
-    DFS(root->left, min_height, temp_height +1);
+    dfs(root->left, temp, min_h);
+    dfs(root->right, temp, min_h);
+    return;
 
-    DFS(root->right, min_height, temp_height +1);
 
-    return 0;
-
-    
 
 }
+
 
 class Solution {
 public:
     int minDepth(TreeNode* root) {
         
-        int min_height = INT_MAX;
-        int temp_height = 1;
+        int temp = 0;
+        int min_h = INT_MAX;
 
-        if (!root) return 0;
-
-        DFS(root, min_height, temp_height);
-
-        return min_height;
+         dfs(root, temp, min_h);
+         return min_h;
     }
 };
