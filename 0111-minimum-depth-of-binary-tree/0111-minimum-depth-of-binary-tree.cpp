@@ -20,6 +20,8 @@ class Solution {
 public:
     int minDepth(TreeNode* root) {
         
+        if (!root) return 0;
+
         int temp = 0;
         int min_h = INT_MAX;
 
