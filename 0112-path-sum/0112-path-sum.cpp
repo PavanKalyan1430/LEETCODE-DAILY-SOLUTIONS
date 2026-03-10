@@ -1,27 +1,19 @@
-bool DFS(TreeNode* root, int &targetSum, int currentSum){
-
-    if ( !root ) return false;
-
-    currentSum+= root->val;
-
-     if (!root->left and !root->right){
-        if (currentSum == targetSum){
-            return true;
-        }
-    }
-
-
-    bool left =  DFS(root->left , targetSum, currentSum);
-    bool right =  DFS(root->right , targetSum, currentSum);
-
-    return left or right;
-}
 
 class Solution {
 public:
-    bool hasPathSum(TreeNode* root, int targetSum) {
+    bool hasPathSum(TreeNode* root, int target) {
+        if (!root) return false;
 
-        int currentSum = 0;
-        return DFS(root, targetSum, currentSum);
+
+        if (!root->left && !root->right){
+            target -= root->val;
+            if (target == 0) return true;
+            else return false;
+        }
+
+        bool left = hasPathSum(root->left, target-root->val);
+        bool right = hasPathSum(root->right, target-root->val);
+        return left || right;
+
     }
 };
