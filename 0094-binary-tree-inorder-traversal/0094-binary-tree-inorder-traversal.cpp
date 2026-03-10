@@ -1,16 +1,19 @@
-void inorder(TreeNode* root, vector<int> & result){
-    if ( root == NULL) return ;
+void fun(vector<int>& result, TreeNode* root){
 
-    inorder(root->left, result);
+    if (!root) return;
+
+    fun(result, root->left);
     result.push_back(root->val);
-    inorder(root->right, result);
+    fun(result, root->right);
+
 }
 class Solution {
 public:
     vector<int> inorderTraversal(TreeNode* root) {
-        
-        vector <int> result;
-        inorder(root, result);
+        vector<int> result;
+
+        fun(result, root);
+
         return result;
     }
 };
