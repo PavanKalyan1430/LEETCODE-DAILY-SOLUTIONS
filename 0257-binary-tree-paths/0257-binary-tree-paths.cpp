@@ -1,36 +1,34 @@
-void DFS(TreeNode* root, vector<string>&result, string temp){
+void dfs(TreeNode* root, vector<string>& result, string temp){
 
-    if (!root) return;
+        if (!root) return;
 
-    if (!root->left && !root->right){
-        temp += to_string(root->val);
-        result.push_back(temp);
-        return;
-    }
+        temp+= to_string(root->val);
+        
+        if (!root->left && !root->right){
+            result.push_back(temp);
+        }
 
-    else temp += (to_string(root->val) + "->");
+        dfs(root->left, result, temp+"->");
+        dfs(root->right, result, temp+"->");
 
-    DFS(root->left, result, temp );
-
-    DFS(root->right, result, temp);
-    
-
-   
-
-    return;
-    
-
-
+       
 }
+
+
+
 class Solution {
 public:
     vector<string> binaryTreePaths(TreeNode* root) {
-        vector<string> result;
+        
 
+        vector<string> result;
         string temp = "";
 
-        DFS(root, result, temp);
+        dfs(root, result, temp);
 
         return result;
+
+
+
     }
 };
