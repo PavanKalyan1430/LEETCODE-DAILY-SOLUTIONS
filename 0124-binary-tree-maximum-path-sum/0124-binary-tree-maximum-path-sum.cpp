@@ -1,24 +1,26 @@
-int dfs(TreeNode* root, int &max_sum){
+int dfs(TreeNode* root, int& maxsum){
 
-    if (!root) return 0;
+    if ( !root ) return 0;
 
-    int left = max(0, dfs(root->left, max_sum));
-    int right = max(0, dfs(root->right, max_sum));
+    int left = max(0, dfs(root->left, maxsum));
+    int right = max(0, dfs(root->right, maxsum));
 
     int pathsum = root->val + left + right;
-    max_sum = max(max_sum , pathsum);
+    maxsum = max(maxsum , pathsum);
 
     return max(left, right) + root->val;
 
 }
 
 
-
 class Solution {
 public:
     int maxPathSum(TreeNode* root) {
-        int max_sum = INT_MIN;
-        dfs(root, max_sum);
-        return max_sum;
+        
+        int maxsum = INT_MIN;
+
+        dfs(root, maxsum);
+
+        return maxsum;
     }
 };
