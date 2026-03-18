@@ -1,35 +1,26 @@
 class Solution {
 public:
-    string convert(string s, int numRows) {
+    string convert(string s, int n) {
         
-        vector <string > res(numRows) ;
-        string result_string = "";
+        vector<string> res(n);
 
-        int index = 0;
+        if (n == 1) return s;
+
+        int ind = 0;
         int dir = -1;
 
-        if (numRows == 1) return s;
-        
         for (int i=0; i<s.size(); i++){
 
-            if (index == 0 or index == numRows-1){
-                dir = dir * -1;
-            }
-            // cout<<index<<" ";
-            res[index]+= s[i];
-            index+= dir; 
+            if ( ind == 0 || ind == n-1 ) dir*= -1;
+            res[ind].push_back(s[i]);
+            ind += dir;
 
         }
 
-        cout<<endl;
+        string result = "";
 
-        for (auto i : res){
-            result_string +=i;
-        }
-
-        return result_string;
-
-
+        for (auto i : res) result +=i;
+        return result; 
 
 
     }
