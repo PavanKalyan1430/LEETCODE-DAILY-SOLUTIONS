@@ -9,7 +9,7 @@ public:
             s+= to_string(nums[i]);
         }
 
-        cout<<s<<" ";
+      //  cout<<s<<" ";
 
         for (int i=0; i<s.size(); i++){
             cnt += ( (s[i] - '0') == digit)  ? 1 : 0;
