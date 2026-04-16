@@ -1,35 +1,45 @@
-int expand(string &s , int left , int right){
+int expand(string &s , int left, int right ){
 
-    while (left>=0 && right<s.size() && s[left] == s[right]){
+    while (left >=0 && right <s.size() && s[left] == s[right]){
         left-=1;
         right+=1;
     }
 
+//    a a a
+//  -1 0 1 2 3
+    //cout<<right-left-1<<" ";
     return right-left-1;
+
+    //return right-left-1;
+
 }
+
 
 
 class Solution {
 public:
     string longestPalindrome(string s) {
         
-        int start = 0;
-        int end = 0;
+        int sz = s.size();
 
-        for (int i=0; i<s.size(); i++){
+        int i = 0;
+        int maxi = 0, maxlen = 0, start;
+
+        while (  i < sz){
+            int odd = expand(s, i-1, i+1);
+            int even = expand(s, i-1,i );
             
-            int len1 = expand(s, i, i) ;  // oddlength  cbabc len = 5
-            int len2 = expand(s, i , i+1 ) ;      // even lenght abccba
-
-            int len = max(len1 , len2);
-
-            if (len > end - start){
-                start = i - (len-1)/2;
-                end =   i + len/2;
+            maxi = max(odd, even);
+            if (maxi > maxlen){
+                maxlen = maxi;
+                start = i- (maxlen/2);
             }
+
+            i+=1;
+            
         }
 
-        string result = s.substr(start , end-start+1);
-        return result;
+        //cout<<endl<<start <<" "<<maxlen;
+        return s.substr(start , maxlen);
     }
 };
