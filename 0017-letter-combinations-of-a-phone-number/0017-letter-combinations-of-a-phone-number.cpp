@@ -1,62 +1,56 @@
-void fun(vector<string> &result, string&digits, string &temp, 
-    unordered_map <char,vector<char>> &m, int idx){
-        
-        
-        if (idx == digits.size()){
-            result.push_back(temp);
-            return;
-        }
-        
-        for (int i= 0; i<m[digits[idx]].size(); i++){
-            
-            char num = digits[idx];
-            char  c =  m[num][i]; 
-            
-            temp += c;
-            fun(result, digits, temp, m, idx+1);
-            temp.pop_back();
-            
-        }
-        
+void fun(string &digits, vector<string>&result, unordered_map<char, string> &m, string & temp, int ind){
+
+    if (ind == digits.size()){
+        result.push_back(temp);
         return;
-        
-        
+    }
+
+    for (int i=0 ; i<m[digits[ind]].size(); i++){
+
+        char dig = digits[ind] ;
+        //cout<<dig<<" ";
+        char c = m[dig][i];
+
+       // cout<<c<<" ";
+
+        temp.push_back(c);
+        fun(digits, result, m, temp, ind+1);
+        temp.pop_back();
+
+    }
+
+    return;
+
+
+
 }
-
-
 
 
 class Solution {
 public:
     vector<string> letterCombinations(string digits) {
         
-        unordered_map <char , vector<char>> m;
+        vector<string> result;
 
-        //m.insert( {key : value})
+        unordered_map <char , string> m;
 
-        m.insert({'2', {'a', 'b', 'c'}});
-        m.insert({'3', {'d', 'e', 'f'}});
-        m.insert({'4', {'g', 'h', 'i'}});
-        m.insert({'5', {'j', 'k', 'l'}});
-        m.insert({'6', {'m', 'n', 'o'}});
-        m.insert({'7', {'p', 'q', 'r', 's'}});
-        m.insert({'8', {'t', 'u', 'v'}});
-        m.insert({'9', {'w', 'x', 'y', 'z'}});
+        m.insert({'2' , "abc"});
+        m.insert({'3' , "def"});
+        m.insert({'4' , "ghi"});
+        m.insert({'5' , "jkl"});
+        m.insert({'6' , "mno"});
+        m.insert({'7' , "pqrs"});
+        m.insert({'8' , "tuv"});
+        m.insert({'9' , "wxyz"});
 
-      vector<string > result;
-      string temp = "";
-      fun(result, digits, temp, m, 0);
+        int ind = 0;
+        string temp = "";
 
-      return result;
-}
+        fun(digits,result,  m, temp, ind);
 
-
-       
-        
+        return result;
 
 
 
-    
-
-    
+    }
 };
