@@ -1,27 +1,34 @@
-int fun(vector<int>&nums, int prev , int i, int n, vector<vector<int>>& dp){
+int fun(vector<int>&nums, int prev , int curr, vector<vector<int>> &dp){
 
-        if (i == n) return 0;
+    if (curr == nums.size()){
+        return 0;
+    }
 
-        if (dp[i][prev+1] != -1) return dp[i][prev+1];
+    if (dp[prev+1][curr] != -1) return dp[prev+1][curr];
 
-        if (prev == -1 || nums[i] >nums[prev]){
+    if ( prev == -1 || nums[curr] > nums[prev] ){
+        int pick  = 1 + fun(nums, curr, curr+1, dp);
+        int notpick = fun(nums, prev , curr+1, dp);
 
-            int pick = 1 + fun(nums, i, i+1, n, dp);
-            int notpick = fun(nums, prev, i+1, n, dp);
+        return dp[prev+1][curr] = max(pick , notpick);
+    }
 
-            return dp[i][prev+1] = max(pick , notpick);
-        }
+    else return dp[prev+1][curr] = fun(nums, prev , curr+1, dp);
 
-        else return dp[i][prev+1] = fun(nums, prev, i+1, n, dp);
 }
+
 
 class Solution {
 public:
     int lengthOfLIS(vector<int>& nums) {
         
+        int prev = -1;
+        int i = 0;
 
         int n = nums.size();
-        vector<vector<int>> dp(n , vector<int>(n+1, -1));
-        return fun(nums, -1, 0, n, dp);
+
+        vector<vector<int>> dp(n+1, vector<int>(n, -1));
+
+        return fun(nums, prev ,0, dp);
     }
 };
