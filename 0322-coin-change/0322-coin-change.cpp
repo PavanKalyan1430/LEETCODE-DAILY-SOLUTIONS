@@ -1,34 +1,49 @@
-int fun(vector<int>&nums, int amount , int i, vector<vector<int>>&dp){
+vector<vector<int>> dp;
 
-    if (i < 0){
-        if (amount == 0) return 0;
+int fun(vector<int>&nums , int target , int i){
+   
+    if (i == nums.size()){
+        if (target == 0) return 0;
         else return INT_MAX-1;
+
     }
 
-    if (dp[i][amount] != -1) return dp[i][amount];
+    if (dp[i][target] != -1) return dp[i][target];
 
-    if (nums[i] <= amount){
-        int pick = 1 + fun(nums ,amount-nums[i] , i, dp);
-        int notpick = fun(nums, amount, i-1, dp);
 
-        return dp[i][amount] =  min(pick , notpick);
+
+    if (nums[i] <= target){
+        int pick =   1  + fun(nums, target-nums[i], i);
+        int not_pick =  fun(nums, target, i+1);
+
+        return dp[i][target] = min(pick , not_pick);
+        
     }
 
-    else return dp[i][amount] = fun(nums, amount , i-1, dp);
+    else return dp[i][target] = fun(nums, target , i+1);
+
+
 
 }
 
 
 
+
 class Solution {
 public:
-    int coinChange(vector<int>& nums, int amount) {
+    int coinChange(vector<int>& coins, int amount) {
         
-        int n = nums.size();
-        vector<vector<int>> dp(n, vector<int>(amount+1, -1));
-        int ans = fun(nums,amount , n-1, dp);
+        int n = coins.size();
+        int ind = 0;
+   
+        dp.assign(n, vector<int>(amount+1 , -1));
+        int res = fun(coins , amount, ind);
 
-        if (ans == INT_MAX-1) return -1;
-        else return ans;
+
+
+        
+        if ( res == INT_MAX-1) return -1;
+        else return res;
+
     }
 };
