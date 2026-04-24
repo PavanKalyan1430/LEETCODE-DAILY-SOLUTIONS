@@ -13,7 +13,7 @@ public:
 
         int k = nums.size();
 
-        for (int i : nums) cout<<i<<" ";
+      //  for (int i : nums) cout<<i<<" ";
 
         vector<vector<int>> dp(k+1, vector<int>(n+1, INT_MAX-1));
 
