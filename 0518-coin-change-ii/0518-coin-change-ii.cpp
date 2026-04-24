@@ -1,26 +1,35 @@
+vector<vector<int>> dp;
+
+
+int fun(vector<int>&nums , int amount , int i){
+
+    if ( i == nums.size()){
+        if (amount == 0) return 1;
+        else return 0;
+    }
+
+    if (dp[i][amount] != -1) return dp[i][amount];
+
+    if (amount >= nums[i]){
+
+        int pick = fun(nums , amount-nums[i], i);
+        int notpick = fun(nums, amount , i+1);
+
+        return dp[i][amount] =   pick + notpick;
+
+    }
+
+    else return dp[i][amount] = fun(nums, amount , i+1);
+
+}
+
+
 class Solution {
 public:
-    int change(int amount, vector<int>& nums) {
+    int change(int amount, vector<int>& coins) {
         
-        int n = nums.size();
-
-        vector<vector<unsigned long long>> dp(n+1, vector<unsigned long long>(amount+1)) ;
-
-        for (int i=0; i<=n; i++) dp[i][0] = 1;
-
-        for (int i=1; i<=n; i++){
-            for (int j =1; j<= amount ; j++){
-
-                if ( j >= nums[i-1]){
-                    dp[i][j] = dp[i-1][j] + dp[i][j-nums[i-1]];
-                }
-
-                else dp[i][j] = dp[i-1][j];
-            }
-        }
-
-        return dp[n][amount];
-        
-        
+       int n = coins.size();
+       dp.assign(n,vector<int>(amount+1, -1)); 
+        return fun(coins , amount , 0);
     }
 };
