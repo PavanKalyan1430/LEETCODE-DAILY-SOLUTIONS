@@ -1,26 +1,44 @@
 class Solution {
 public:
-    int minPathSum(vector<vector<int>>& grid) {
-        int rows = grid.size();
-        int cols = grid[0].size();
+    int minPathSum(vector<vector<int>>& nums) {
+        
+        int rows = nums.size();
+        int cols = nums[0].size();
 
-        // Fill first column
-        for (int i = 1; i < rows; i++) {
-            grid[i][0] += grid[i-1][0];
+        vector<vector<int>> dp(rows, vector<int>(cols, 0));
+
+        int sum = 0;
+
+        for (int i=0; i<rows; i++){
+            sum += nums[i][0];
+            dp[i][0]= sum;  
         }
 
-        // Fill first row
-        for (int j = 1; j < cols; j++) {
-            grid[0][j] += grid[0][j-1];
+        sum = 0;
+        
+        for (int i=0; i<cols ; i++){
+            sum += nums[0][i];
+            dp[0][i] = sum;
         }
 
-        // Fill the rest of the grid using DP
-        for (int i = 1; i < rows; i++) {
-            for (int j = 1; j < cols; j++) {
-                grid[i][j] += min(grid[i-1][j], grid[i][j-1]);
+
+
+        for (int i=1; i<rows ; i++){
+            for (int j =1; j<cols ; j++){
+                dp[i][j] = nums[i][j] + min(dp[i-1][j] , dp[i][j-1]);
             }
         }
 
-        return grid.back().back();
+
+        // for (auto i : dp){
+        //     for (auto j : i) cout<<j<<" ";
+        //     cout<<endl;
+        // }
+
+
+        return dp.back().back();
+
+
+
     }
 };
