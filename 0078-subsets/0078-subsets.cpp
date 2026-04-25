@@ -1,33 +1,30 @@
-void fun(vector <int> nums, vector<vector<int>>&result, vector <int> &temp, int start){
+void fun(vector<int>&nums, vector<int>&temp, vector<vector<int>>&result, int ind){
 
-    result.push_back(temp);
-
-    for (int i = start; i<nums.size(); i++){
-
-        temp.push_back(nums[i]);    //INCLUDE.
-
-        fun(nums, result, temp, i+1);   // recursion.
-
-        temp.pop_back();   //    EXCLUDE.   
-
+    if (ind == nums.size()){
+        result.push_back(temp);
+        return;
     }
 
+    temp.push_back(nums[ind]);
+    fun(nums, temp, result, ind+1);
+
+    temp.pop_back();
+    fun(nums, temp, result, ind+1);
+
+    return ;
 
 }
-
 
 class Solution {
 public:
     vector<vector<int>> subsets(vector<int>& nums) {
-        vector <vector<int>> result;
-        vector <int> temp;
-        int start = 0;
-          fun(nums, result,temp, start);
-         return result;
+        
+        vector<vector<int>> result;
+        vector<int> temp;
 
-         
+        int ind = 0;
 
-
-
+        fun(nums, temp, result, ind);
+        return result;
     }
 };
