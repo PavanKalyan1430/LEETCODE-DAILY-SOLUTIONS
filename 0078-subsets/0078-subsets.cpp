@@ -1,18 +1,14 @@
 void fun(vector<int>&nums, vector<int>&temp, vector<vector<int>>&result, int ind){
 
-    if (ind == nums.size()){
-        result.push_back(temp);
-        return;
+    result.push_back(temp);
+
+    for (int i=ind ; i<nums.size(); i++){
+
+        temp.push_back(nums[i]);
+        fun(nums, temp, result, i+1);
+
+        temp.pop_back();
     }
-
-    temp.push_back(nums[ind]);
-    fun(nums, temp, result, ind+1);
-
-    temp.pop_back();
-    fun(nums, temp, result, ind+1);
-
-    return ;
-
 }
 
 class Solution {
