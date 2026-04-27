@@ -24,7 +24,7 @@ public:
                 if (node->right) q.push({node->right, 2*index+2});
             }
 
-            cout<<first <<"   "<<last<<endl;
+            //cout<<first <<"   "<<last<<endl;
 
             maxi = max(maxi , last+1);
         }
