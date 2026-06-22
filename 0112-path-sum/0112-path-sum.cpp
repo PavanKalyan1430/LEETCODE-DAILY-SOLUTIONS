@@ -1,19 +1,25 @@
+bool fun(TreeNode* root, int sum, int &target){
+
+    if (!root) return false;
+
+    sum += root->val;
+    
+    if (!root->left && !root->right && sum == target ) return true;
+
+    bool left = fun(root->left, sum , target) ;
+    bool right = fun(root->right, sum , target);
+
+    return left || right;
+
+
+}
+
+
 
 class Solution {
 public:
     bool hasPathSum(TreeNode* root, int target) {
-        if (!root) return false;
-
-        target -= root->val;
-
-        if (!root->left && !root->right){
-            if (target == 0) return true;
-            else return false;
-        }
-
-        bool left = hasPathSum(root->left, target);
-        bool right = hasPathSum(root->right, target);
-        return left || right;
-
+        
+        return fun(root,0, target);
     }
 };
