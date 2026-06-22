@@ -1,26 +1,32 @@
-int dfs(TreeNode* root, int& maxsum){
+int fun(TreeNode* root, int &ans ){
 
-    if ( !root ) return 0;
+    if (!root) return 0;
 
-    int left = max(0, dfs(root->left, maxsum));
-    int right = max(0, dfs(root->right, maxsum));
 
-    int pathsum = root->val + left + right;
-    maxsum = max(maxsum , pathsum);
+    int left_sum   =  max(0, fun(root->left, ans));
+    int right_sum  =  max(0, fun(root->right, ans));
 
-    return max(left, right) + root->val;
+    int total_sum = left_sum + right_sum + root->val;
+
+    ans = max(ans , total_sum);
+   // cout<<ans<<endl;
+
+    return root->val + max(left_sum , right_sum);
+
 
 }
+
 
 
 class Solution {
 public:
     int maxPathSum(TreeNode* root) {
         
-        int maxsum = INT_MIN;
+        int ans = INT_MIN;
+        int sum = 0;
 
-        dfs(root, maxsum);
+        fun(root, ans);
 
-        return maxsum;
+        return ans;
     }
 };
