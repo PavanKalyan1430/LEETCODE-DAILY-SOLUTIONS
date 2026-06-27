@@ -1,24 +1,26 @@
 class Solution {
 public:
     int jump(vector<int>& nums) {
-        int stop = 0;
-        int max_distance = 0;
-        int jump_count = 0;
+        
 
-        if (nums[0])
+        int stop= 0;
+        int max_reach = 0;
+        int jumps = 0;
 
-
-        for(int i=0; i<nums.size()-1; i++){
-
-            max_distance = max(max_distance,nums[i] + i);
-
-            if (i== stop){
-                jump_count +=1;
-                stop = max_distance;}
+        for (int i=0; i<nums.size()-1; i++){
             
+            max_reach = max(max_reach , nums[i]+i);
+
+            if (stop == i){
+                jumps +=1;
+                stop = max_reach;
+            }
 
         }
-        return jump_count;
+
+        return jumps;
+
+
 
     }
 };
