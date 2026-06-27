@@ -1,42 +1,47 @@
 class Solution {
 public:
     vector<vector<int>> threeSum(vector<int>& nums) {
-
-        int n = nums.size();
         
+
         sort(nums.begin(), nums.end());
+
         vector<vector<int>> result;
 
-        for (int i=0; i<nums.size()-2; i++){
+        for (int left=0; left<nums.size(); left++){
 
-            if (i!=0 && nums[i] == nums[i-1]) continue;
+            int l = nums[left];
 
-            int left = i;
-            int mid = i+1;
-            int right = n-1;
+            if (left!= 0 && nums[left] == nums[left-1]) continue;
 
-            while(mid < right){
+            int mid = left+1;
+            int right = nums.size()-1;
 
-                int ele = nums[left] + nums[mid] + nums[right];
 
-                if ( ele == 0){
-                    result.push_back({nums[left], nums[mid], nums[right]});
-                    mid +=1;
-                    right-=1;    
-                       
-                    while (mid < n && nums[mid] == nums[mid-1]) mid +=1; 
-                    while (right > 0 && nums[right] == nums[right+1]) right-=1;
+            while (mid < right){
+                int m = nums[mid];
+                int r = nums[right];
+                int total = l + m + r;
+
+                if (total == 0){
+                    result.push_back({l,m,r});
+                    
+                    while(right > mid && nums[right] == nums[right-1]) right-=1;
+                    while (mid < right && nums[mid] == nums[mid+1])  mid+=1;
+
+                    mid+=1;
+                    right-=1;
                 }
 
-                else if (ele < 0)  mid+=1;
+                else if (total > 0) right-=1;
 
-                else right-=1;
-
+                else mid+=1;
 
             }
+
+
+
+
         }
-
-        return result;
-
+            return result;
     }
 };
