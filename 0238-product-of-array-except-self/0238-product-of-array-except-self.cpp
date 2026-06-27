@@ -3,32 +3,25 @@ public:
     vector<int> productExceptSelf(vector<int>& nums) {
         
         int n = nums.size();
-        vector<int> suffix(n, 1);
-        vector<int> prefix(n, 1);
-        vector<int> result(n)
 
-        int pro = nums[0];
+        vector<int> prefix(n, 1), suffix(n,1);
+
+        vector<int> result(n);
 
         for (int i=1; i<nums.size(); i++){
-            prefix[i] = pro;
-            pro = pro * nums[i];
+            prefix[i] = prefix[i-1] * nums[i-1];
         }
 
-        pro = nums.back();
-
-        for (int i=nums.size()-2; i>=0; i--){
-            suffix[i] = pro;
-            pro = pro * nums[i];
+        for (int i=n-2; i>=0; i--){
+            suffix[i] = suffix[i+1] * nums[i+1];
         }
 
-        // for (auto i : prefix) cout<<i<<" ";
-        // cout<<endl;
-
-        // for (auto i : suffix) cout<<i<<" ";
-
-        for (int i=0; i<result.size(); i++){
-            result[i] = suffix[i] * prefix[i];
+        for (int i=0; i<n; i++){
+            result[i] = prefix[i] * suffix[i];
         }
+
         return result;
+
+
     }
 };
