@@ -1,50 +1,49 @@
 class Solution {
 public:
     string minWindow(string s, string t) {
+        
+        unordered_map <char,int> need, have;
 
-        if (s.size() < t.size()) return "";
+        int need_cnt = 0, have_cnt = 0;
 
-        vector<int> freq(128, 0);
+        for (int i=0; i<t.size(); i++) need[t[i]]+=1;
 
-        // Build requirement frequency
-        for (char c : t)
-            freq[c]++;
+        need_cnt = need.size();
 
-        int left = 0;
-        int start = 0;
-        int min_len = INT_MAX;
+        int left = 0, min_len = INT_MAX, start = 0;
 
-        int required = t.size();  // total characters still needed
+        for (int right =0; right<s.size(); right++){
 
-        for (int right = 0; right < s.size(); right++) {
+            if (need.count(s[right])) have[s[right]]+=1;
 
-            // If this character was needed, reduce required
-            if (freq[s[right]] > 0)
-                required--;
+            if (need.count(s[right]) && have[s[right]] == need[s[right]]) have_cnt +=1;
 
-            // Decrease frequency (include in window)
-            freq[s[right]]--;
+            while (have_cnt >= need_cnt){
 
-            // When window is valid
-            while (required == 0) {
+                if (right-left+1 < min_len){
 
-                // Update minimum window
-                if (right - left + 1 < min_len) {
-                    min_len = right - left + 1;
+                    min_len = right-left+1;
                     start = left;
                 }
 
-                // Remove left character from window
-                freq[s[left]]++;
+                if (need.count(s[left])){
 
-                // If removing makes it needed again
-                if (freq[s[left]] > 0)
-                    required++;
+                    if (need[s[left]] >= have[s[left]]) have_cnt-=1;
 
-                left++;
+                    have[s[left]]-=1;
+                }
+
+                if (have[s[left]] <= 0) have.erase(s[left]);
+
+                left+=1;
+
             }
+
+
         }
 
-        return (min_len == INT_MAX) ? "" : s.substr(start, min_len);
+            if (min_len == INT_MAX) return "";
+
+            return s.substr(start, min_len);
     }
 };
