@@ -1,15 +1,16 @@
+void fun(vector<int>&nums, vector<vector<int>> &result, int idx){
 
-void fun(vector<int>&nums, vector<vector<int>> &result, vector<int>&temp,int ind ){
-
-    if (ind == nums.size()){
+     if (idx == nums.size()){
         result.push_back(nums);
-        return;
+         return;
     }
 
-    for (int i=ind; i<nums.size(); i++){
-        swap(nums[i], nums[ind]);
-        fun(nums, result, temp, ind+1);
-        swap(nums[i], nums[ind]);
+    for (int i=idx ; i<nums.size(); i++){
+
+        swap(nums[i] , nums[idx]);
+        fun(nums, result , idx+1);
+        swap(nums[i], nums[idx]);
+
     }
 
     return;
@@ -17,16 +18,16 @@ void fun(vector<int>&nums, vector<vector<int>> &result, vector<int>&temp,int ind
 }
 
 
+
 class Solution {
 public:
     vector<vector<int>> permute(vector<int>& nums) {
         
         vector<vector<int>> result;
-        vector<int> temp;
+        int idx = 0;
+        
+        fun(nums, result , idx);
 
-        int ind  =0;
-
-        fun(nums, result, temp, ind);
 
         return result;
     }
