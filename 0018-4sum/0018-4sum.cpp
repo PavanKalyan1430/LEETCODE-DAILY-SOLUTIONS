@@ -1,58 +1,51 @@
 class Solution {
 public:
     vector<vector<int>> fourSum(vector<int>& nums, int target) {
+        
+
+        // {-2,-1,-1,0,0,1,1,2}
 
         sort(nums.begin(), nums.end());
-
-        for (auto i : nums) cout<<i<<" ";
-
-        cout<<endl;
-
         vector<vector<int>> result;
+        int sz = nums.size();
 
-        int n = nums.size();
 
-        for (int i=0; i<n-3; i++){
+        for (int i=0; i<sz-3; i++){
+
+            int st = i;
 
             if (i != 0 && nums[i] == nums[i-1]) continue;
 
-            int ele = nums[i];
-            int j = i+1;
+            for (int j =i+1; j<sz-2; j++){
 
-            //cout<<"check";
-
-            for (; j<n-2; j++){
-
-                if ( j != i+1 && nums[j] == nums[j-1]) continue;
+                if (j!=i+1 && nums[j] == nums[j-1]) continue;
 
                 int left = j;
                 int mid = j+1;
-                int right = n-1;
+                int right = sz-1;
 
-                while(mid < right){
-                    int sum = ele + nums[left] + nums[mid] + nums[right];
+                //cout<<j<<" ";
 
+                while (mid < right){
+                    long long  sum = 0LL + nums[st] + nums[left] + nums[mid] + nums[right];
 
-                   // cout<< mid <<"   "<<right<<"    "<<sum <<"    "<<target<<endl;
-                    if (sum == target){
-                    result.push_back({ele, nums[left], nums[mid], nums[right]});
+                //    cout<<sum <<endl;
 
-                        mid+=1;
-                        right -=1;
+                    if (sum  == target){
+                        result.push_back({nums[st] , nums[left] , nums[mid] , nums[right]});
 
-                        while(mid < n-1 && nums[mid] == nums[mid-1]) mid+=1;
-                        while(right > 0 && nums[right] == nums[right+1]) right-=1;
+                        while (mid < right && nums[mid] == nums[mid+1]) mid+=1;
+                        while (right > mid && nums[right] == nums[right-1]) right-=1;
 
-
+                        mid +=1;
+                        right-=1;
                     }
 
                     else if (sum < target) mid+=1;
 
-                    else right -=1;
+                    else right-=1;
                 }
-
-            }
-
+            }  
         }
 
         return result;
