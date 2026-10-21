@@ -3,29 +3,23 @@ public:
     void merge(vector<int>& nums1, int m, vector<int>& nums2, int n) {
         
 
-        int a = m-1;
-        int b  = n-1;
-        int c = m+n-1;
+        int  a = m-1;
+        int  b = n-1;
+        int  c = m+n-1;
 
-
-        while ( a >=0 && b>= 0){
-
+        while (a >= 0 && b >=0){
             int n1 = nums1[a];
-            int n2  = nums2[b];
-
+            int n2 = nums2[b];
 
             if (n2 > n1){
                 nums1[c--] = nums2[b--];
             }
 
             else nums1[c--] = nums1[a--];
-
-
         }
 
-        while ( b >= 0){
-            nums1[c--] = nums2[b--];
-        }
+        while (b>= 0) nums1[c--] = nums2[b--];
+
+        
     }
-
 };
