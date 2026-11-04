@@ -1,32 +1,43 @@
 class Solution {
 public:
-    int characterReplacement(string s, int k) {
+    int characterReplacement(string nums, int k) {
         
+
         unordered_map <char , int> m;
 
-        int left = 0;
-        int max_freq = 0;
-        int max_len = 0;
+        int max_freq  = 0, result  = 0;
+        int left  = 0;
+        char max_char;
 
-        int window_len ;
+        for (int right = 0; right<nums.size(); right++){
 
-        for (int right = 0; right<s.size(); right++){
+            m[nums[right]]+=1;
 
-            m[s[right]]++;
-            max_freq = max(max_freq, m[s[right]]);
+            if (m[nums[right]] >= max_freq){
+                max_freq = m[nums[right]];
+                max_char  = nums[right];
+            }
+            
+            //max_freq = max(max_freq, m[nums[right]]);
 
-            window_len = right - left + 1;
+            //diff  = (right- left + 1) - max_freq;
 
-            while ( (window_len - max_freq ) > k){
-                m[s[left]]--;
-                window_len-=1;
-                left++;
+            while ( (right - left + 1) - (max_freq) > k){
+
+                if (m[nums[left]] == max_char) max_freq -=1;
+                m[nums[left]]-=1;
+                left+=1;
             }
 
-            max_len = max(max_len , right-left+1);
+            result = max(result , right-left+1);
+
+            
 
         }
 
-        return max_len;
+        return result;
+
+
+
     }
 };
