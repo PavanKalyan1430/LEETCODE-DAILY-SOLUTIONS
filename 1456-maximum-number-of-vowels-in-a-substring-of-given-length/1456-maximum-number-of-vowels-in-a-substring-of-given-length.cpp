@@ -1,25 +1,33 @@
 class Solution {
 public:
-    int maxVowels(string s, int k) {
+    int maxVowels(string nums, int k) {
         
         unordered_set <char> sety = {'a', 'e', 'i', 'o', 'u'};
 
-        int left = 0;
-        int result = 0, vowel_count=0;
+        int result  = 0;
 
-        for (int right=0; right<s.size(); right++){
+        int left  = 0, v_count = 0;
+        
 
-            if (sety.count(s[right])){
-                vowel_count +=1;
+
+        for (int right = 0 ; right<nums.size(); right++){
+
+            if (sety.count(nums[right])){
+                v_count  += 1;
             }
 
-            while ( (right - left + 1) > k){
+            if (right-left+1 > k){
 
-                if (sety.count(s[left])) vowel_count -=1;
-                
-                left++;
+                if ( sety.count(nums[left]) ){
+                    v_count -=1;
+                }
+
+                left+=1;
             }
-            result = max(result , vowel_count);
+
+            result = max(result , v_count); 
+
+
         }
 
         return result;
